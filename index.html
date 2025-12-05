@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aki Game Dev | Game Dev Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-color: #0d0e15;
+            --card-bg: #161821;
+            --text-main: #a6accd;
+            --accent: #ff0055;
+            /* Hồng Neon */
+            --highlight: #00e5ff;
+            /* Xanh Cyan */
+            --grid-color: rgba(0, 229, 255, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: crosshair;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'VT323', monospace;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.4;
+            font-size: 1.3rem;
+            overflow-x: hidden;
+            background-image:
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 40px 40px;
+            animation: gridMove 3s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% {
+                background-position: 0 0;
+            }
+
+            100% {
+                /* Di chuyển sang trái 40px (đúng bằng kích thước 1 ô vuông) */
+                /* Muốn chạy nhanh hơn thì giảm số giây ở body xuống (ví dụ 1s) */
+                /* Muốn chạy chậm thì tăng lên (ví dụ 5s, 10s) */
+                background-position: -40px 0;
+            }
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1) 1px, transparent 1px, transparent 2px);
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        h1,
+        h2,
+        h3,
+        .logo,
+        .btn,
+        .section-title {
+            font-family: 'Press Start 2P', cursive;
+            text-transform: uppercase;
+        }
+
+        /* --- Animations Classes --- */
+        .hidden {
+            opacity: 0;
+            filter: blur(5px);
+            transform: translateY(50px);
+            /* Mặc định thụt xuống dưới */
+            transition: all 1s ease-out;
+        }
+
+        .show {
+            opacity: 1;
+            filter: blur(0);
+            transform: translateY(0);
+        }
+
+        /* Riêng mấy cái thẻ bài thì cho bay trễ từng cái một (stagger) */
+        .project-card:nth-child(2) {
+            transition-delay: 200ms;
+        }
+
+        .project-card:nth-child(3) {
+            transition-delay: 400ms;
+        }
+
+        /* --- Header --- */
+        header {
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(13, 14, 21, 0.95);
+            border-bottom: 2px solid var(--highlight);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(5px);
+        }
+
+        .logo {
+            color: var(--highlight);
+            font-size: 0.9rem;
+            text-shadow: 2px 2px 0px var(--accent);
+        }
+
+        .logo:hover {
+            animation: glitch 0.5s infinite;
+        }
+
+        @keyframes glitch {
+            0% {
+                transform: translate(0)
+            }
+
+            20% {
+                transform: translate(-2px, 2px)
+            }
+
+            40% {
+                transform: translate(-2px, -2px)
+            }
+
+            60% {
+                transform: translate(2px, 2px)
+            }
+
+            80% {
+                transform: translate(2px, -2px)
+            }
+
+            100% {
+                transform: translate(0)
+            }
+        }
+
+        /* --- Hero --- */
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            color: #fff;
+            line-height: 1.6;
+        }
+
+        .hero h1 span {
+            color: var(--accent);
+        }
+
+        .status-bar {
+            background: #000;
+            padding: 8px 15px;
+            border: 1px solid var(--highlight);
+            display: inline-block;
+            margin-bottom: 2rem;
+            box-shadow: 0 0 10px var(--highlight);
+            font-size: 1rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 25px;
+            background: var(--accent);
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.8rem;
+            border: none;
+            transition: 0.2s;
+            box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 0.5);
+            margin: 10px;
+        }
+
+        .btn:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 0.5);
+            background: var(--highlight);
+            color: #000;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--highlight);
+            color: var(--highlight);
+            box-shadow: none;
+        }
+
+        /* --- About Me Section (MỚI) --- */
+        .about-section {
+            padding: 4rem 10%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 4rem;
+            flex-wrap: wrap;
+        }
+
+        .profile-frame {
+            width: 250px;
+            height: 250px;
+            border: 4px solid var(--highlight);
+            padding: 5px;
+            position: relative;
+            background: var(--card-bg);
+        }
+
+        /* Tạo mấy cái góc vuông trang trí cho avatar */
+        .profile-frame::before {
+            content: "";
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            width: 20px;
+            height: 20px;
+            background: var(--accent);
+        }
+
+        .profile-frame::after {
+            content: "";
+            position: absolute;
+            bottom: -4px;
+            right: -4px;
+            width: 20px;
+            height: 20px;
+            background: var(--accent);
+        }
+
+        .profile-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%) contrast(1.2);
+            /* Ảnh trắng đen cho ngầu */
+            transition: 0.5s;
+        }
+
+        .profile-frame:hover .profile-img {
+            filter: grayscale(0%) contrast(1);
+        }
+
+        .about-text {
+            max-width: 600px;
+        }
+
+        .about-text h2 {
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+        }
+
+        .data-row {
+            border-bottom: 1px dashed #333;
+            padding: 8px 0;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .data-label {
+            color: var(--highlight);
+        }
+
+        /* --- Skills --- */
+        .section-title {
+            text-align: center;
+            font-size: 1.5rem;
+            margin: 4rem 0 2rem;
+            color: #fff;
+            text-shadow: 3px 3px 0px var(--accent);
+        }
+
+        .skills-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            padding: 0 10%;
+        }
+
+        .skill-box {
+            background: var(--card-bg);
+            border: 1px solid var(--text-main);
+            padding: 10px 20px;
+            min-width: 100px;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .skill-box:hover {
+            border-color: var(--highlight);
+            color: var(--highlight);
+            transform: scale(1.1);
+        }
+
+        .skill-box strong {
+            display: block;
+            font-size: 1.2rem;
+        }
+
+        /* --- Projects --- */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 3rem;
+            padding: 0 10% 6rem;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            border: 2px solid #333;
+            position: relative;
+            transition: transform 0.3s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--highlight);
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.3);
+        }
+
+        .project-img {
+            width: 100%;
+            height: 200px;
+            background-color: #000;
+            object-fit: cover;
+            border-bottom: 2px solid #333;
+        }
+
+        .project-info {
+            padding: 1.5rem;
+        }
+
+        .project-info h3 {
+            font-size: 1rem;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .tech-stack {
+            color: var(--accent);
+            font-size: 1rem;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 1px dashed #444;
+        }
+
+        /* --- Footer --- */
+        footer {
+            background: #000;
+            padding: 2rem;
+            text-align: center;
+            border-top: 4px solid var(--accent);
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+
+            .about-section {
+                gap: 2rem;
+                padding: 4rem 5%;
+            }
+
+            .projects-grid {
+                padding: 0 5% 4rem;
+            }
+        }
+
+        @keyframes blink {
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">akkii0609</div>
+        <div>
+            <a href="#" style="color:var(--highlight); margin-right:20px;"><i class="fab fa-github"></i></a>
+            <a href="#" style="color:var(--highlight);"><i class="fab fa-linkedin"></i></a>
+        </div>
+    </header>
+
+    <section class="hero hidden">
+        <div class="status-bar">
+            STATUS: 
+            <span style="color:#0f0; animation: blink 1s infinite;">OPEN TO WORK</span>
+             <!-- <span style="color:rgb(255, 0, 0); animation: blink 1s infinite;">BUSY</span> -->
+        </div>
+        <h1>
+            UNITY GAME DEVELOPER<br>
+            <span>AKI NGUYỄN</span>
+        </h1>
+        <p style="max-width: 600px; margin-bottom: 30px; color: #ccc;">
+            > Inserting coins...<br>
+            > Press Start to continue...
+        </p>
+        <div>
+            <a href="#projects" class="btn">START!</a>
+            <a href="#about" class="btn btn-outline">ABOUT ME</a>
+        </div>
+    </section>
+
+    <section id="about" class="about-section hidden">
+        <div class="profile-frame">
+            <img src="./assets/img/avatar.png"
+                alt="Profile" class="profile-img">
+        </div>
+        <div class="about-text">
+            <h2>> CHARACTER_DATA</h2>
+            <p style="margin-bottom: 20px;">
+                Xin chào! Mình là Nguyễn Hữu Tuấn Tú aka Aki.
+
+            </p>
+            <div class="data-row">
+                <span class="data-label">LEVEL:</span> <span>Junior / Entry-Level Unity Developer</span>
+            </div>
+            <div class="data-row">
+                <span class="data-label">CORE SKILLS:</span> <span>C#, Unity XR/AR, State Machine, Data
+                    Structure,...</span>
+            </div>
+            <div class="data-row">
+                <span class="data-label">LOCATION:</span> <span>HCMC, Vietnam (GMT+7)</span>
+            </div>
+            <div class="data-row">
+                <span class="data-label">EMAIL:</span> <span>aki.finding@gmail.com</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- <h2 class="section-title hidden">SKILL TREE</h2>
+    <div class="skills-container hidden">
+        <div class="skill-box"><strong>90</strong> Unity</div>
+        <div class="skill-box"><strong>85</strong> C#</div>
+        <div class="skill-box"><strong>70</strong> Shader</div>
+        <div class="skill-box"><strong>80</strong> Git</div>
+        <div class="skill-box"><strong>60</strong> Blender</div>
+    </div> -->
+
+    <h2 class="section-title hidden" id="projects">PROJECTS </h2>
+
+    <div class="projects-grid">
+        <div class="project-card hidden">
+            <img src="./assets/img/project/001_khubepdieuky.png" alt="Game 1" class="project-img">
+            <div class="project-info">
+                <h3>Khu bếp diệu kỳ</h3>
+                <div class="tech-stack">[C#] [3D] [VR]</div>
+                <p>
+                    Đây là đồ án môn học tâm huyết mà <strong>mình</strong> đã thực hiện toàn bộ các khâu từ Lập trình, Thiết kế đồ họa (Art) đến Game Design. Trò chơi là một mô phỏng quản lý quầy bếp góc nhìn thứ nhất, nơi người chơi phải chạy đua với thời gian để phục vụ các món ăn theo yêu cầu. Dự án là minh chứng cho khả năng làm việc độc lập và tư duy sản phẩm trọn vẹn của mình.
+                </p>
+                <div style="margin-top: 15px;">
+                    <a href="khu-bep-dieu-ky.html" class="btn">XEM</a>
+                    <!-- <a href="#" class="btn" style="padding: 8px 15px;">PLAY DEMO</a> -->
+                </div>
+            </div>
+        </div>
+
+        <div class="project-card hidden">
+            <img src="https://via.placeholder.com/400x250/000/ff0055?text=GAME_02" alt="Game 2" class="project-img">
+            <div class="project-info">
+                <h3>FINISHER: LEVEL UP PHASE</h3>
+                <div class="tech-stack">[ANIMATION] [3D PLAFORMER] [RUN N GUN]</div>
+                <p>
+                    Đây là dự án Action Runner góc nhìn thứ 3 mà <strong>mình</strong> phát triển độc lập (Solo). Lấy cảm hứng từ cơ chế <em>Leviathan Axe</em> huyền thoại trong <em>God of War</em>, người chơi điều khiển nhân vật vừa di chuyển tốc độ cao, vừa ném rìu tiêu diệt quái vật cản đường và phá hủy "Lõi Năng Lượng" cuối màn chơi. Dự án tập trung nặng vào <strong>Toán học (Vector/Bézier Curves)</strong> để xử lý quỹ đạo vũ khí và cảm giác chiến đấu (Game Feel).
+                </p>
+                <div style="margin-top: 15px;">
+                    <a href="finisher.html" class="btn">XEM</a>
+                   
+                </div>
+            </div>
+        </div>
+
+        <div class="project-card hidden">
+            <img src="https://via.placeholder.com/400x250/000/ffff00?text=GAME_03" alt="Game 3" class="project-img">
+            <div class="project-info">
+                <h3>Aviation Assembly</h3>
+                <div class="tech-stack">[C#] [3D] [VR] [SIMULATION] [COURSEWORK]</div>
+                <p>Mô phỏng VR Kỹ thuật Chính xác cho sinh viên ngành Hàng không. Dự án đòi hỏi kỹ năng xử lý Sequential
+                    Assembly Logic (Logic lắp ráp theo từng bước), đảm bảo người dùng tuân thủ quy trình</p>
+                <div style="margin-top: 15px;">
+                    <a href="#" class="btn" style="padding: 8px 15px;">PLAY DEMO</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 2rem; margin-bottom: 4rem;">
+        <a href="all-projects.html" class="btn" style="font-size: 1.2rem; padding: 20px 40px;">
+            <i class="fas fa-database"></i> ACCESS FULL ARCHIVE
+        </a>
+    </div>
+
+    <footer>
+        <p>> SYSTEM SHUTDOWN...</p>
+        <p>© 2025 Designed by aki GameDev.</p>
+    </footer>
+
+    <script>
+        // Sử dụng Intersection Observer - Công nghệ soi camera của trình duyệt
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                // Nếu đối tượng xuất hiện trong màn hình
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show'); // Thêm class 'show' để kích hoạt animation
+                }
+            });
+        });
+
+        // Tìm tất cả những thằng đang ẩn mình (class 'hidden')
+        const hiddenElements = document.querySelectorAll('.hidden');
+
+        // Bắt đầu theo dõi tụi nó
+        hiddenElements.forEach((el) => observer.observe(el));
+    </script>
+
+</body>
+
+</html>

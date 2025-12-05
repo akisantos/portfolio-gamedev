@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project File: FINISHER_LEVEL_UP_PHASE | System Log</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Fira+Code:wght@400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        /* --- COPY LẠI BIẾN CSS CŨ CHO ĐỒNG BỘ --- */
+        :root {
+            --bg-color: #0d0e15;
+            --card-bg: #161821;
+            --text-main: #a6accd;
+            --accent: #ff0055;
+            --highlight: #00e5ff;
+            --grid-color: rgba(0, 229, 255, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'VT323', monospace;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            font-size: 1.4rem;
+            background-image:
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        h1,
+        h2,
+        h3,
+        .btn {
+            font-family: 'Press Start 2P', cursive;
+            text-transform: uppercase;
+        }
+
+        /* --- NAVIGATION --- */
+        .nav-bar {
+            padding: 20px 5%;
+            border-bottom: 1px solid var(--highlight);
+            background: rgba(13, 14, 21, 0.9);
+            position: sticky;
+            top: 0;
+            z-index: 99;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* --- PROJECT HERO --- */
+        .project-hero {
+            height: 60vh;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            padding: 0 10% 4rem;
+            border-bottom: 4px solid var(--accent);
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Thay ảnh bìa game to đùng vào đây */
+            background: url('https://wallpapers.com/images/featured/1920x1080-aesthetic-glrfk0ntspz3tvxg.jpg') no-repeat center center/cover;
+            z-index: -1;
+            filter: brightness(0.4);
+            /* Làm tối ảnh để chữ nổi lên */
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            color: #fff;
+            margin-bottom: 1rem;
+            text-shadow: 4px 4px 0 #000;
+        }
+
+        .tag-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tag {
+            background: var(--accent);
+            color: #fff;
+            padding: 5px 10px;
+            font-size: 0.8rem;
+            font-family: 'Press Start 2P';
+        }
+
+        /* --- MAIN CONTENT --- */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 4rem 20px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 4rem;
+            margin-bottom: 4rem;
+        }
+
+        .description h2 {
+            color: var(--highlight);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 5px solid var(--highlight);
+            padding-left: 15px;
+        }
+
+        .description p {
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+
+        .sidebar {
+            background: var(--card-bg);
+            padding: 2rem;
+            border: 1px solid #333;
+            height: fit-content;
+        }
+
+        .sidebar-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar-item label {
+            display: block;
+            color: var(--accent);
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-family: 'Fira Code', monospace;
+            font-size: 1rem;
+        }
+
+        /* --- CODE SNIPPET (ĐIỂM NHẤN) --- */
+        .code-block {
+            background: #1e1e1e;
+            border: 1px solid #444;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 5px;
+            position: relative;
+            font-family: 'Fira Code', monospace;
+            font-size: 1rem;
+            overflow-x: auto;
+        }
+
+        .code-block::before {
+            content: "C# SCRIPT";
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: var(--highlight);
+            color: #000;
+            padding: 2px 10px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        /* --- GALLERY --- */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 2rem;
+        }
+
+        .gallery img {
+            width: 100%;
+            border: 2px solid #333;
+            transition: 0.3s;
+        }
+
+        .gallery img:hover {
+            border-color: var(--highlight);
+            transform: scale(1.02);
+        }
+
+        /* --- BUTTONS --- */
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background: var(--accent);
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: var(--highlight);
+            color: #000;
+            transform: translateY(-3px);
+        }
+
+        .btn-back {
+            background: transparent;
+            border: 2px solid var(--text-main);
+            color: var(--text-main);
+        }
+
+        .btn-back:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .project-hero {
+                height: 50vh;
+                padding-bottom: 2rem;
+            }
+
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+        }
+
+        /* --- LIGHTBOX (Xem ảnh Fullscreen) --- */
+        .lightbox-modal {
+            display: none;
+            /* Mặc định ẩn */
+            position: fixed;
+            z-index: 9999;
+            /* Nổi lên trên cùng */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            /* Nền đen mờ */
+            backdrop-filter: blur(5px);
+            /* Làm mờ background đằng sau */
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .lightbox-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 80vh;
+            border: 2px solid var(--highlight);
+            box-shadow: 0 0 20px var(--highlight);
+            transform: scale(0.8);
+            transition: transform 0.3s;
+        }
+
+        .lightbox-modal.active .lightbox-content {
+            transform: scale(1);
+            /* Hiệu ứng phóng to khi hiện */
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: var(--accent);
+            font-size: 3rem;
+            font-weight: bold;
+            cursor: pointer;
+            font-family: 'Fira Code', monospace;
+            transition: 0.3s;
+        }
+
+        .close-btn:hover {
+            color: #fff;
+            transform: rotate(90deg);
+        }
+
+        .caption {
+            margin-top: 15px;
+            color: #fff;
+            font-family: 'Fira Code', monospace;
+            font-size: 1.2rem;
+        }
+
+        /* --- NÚT ĐIỀU HƯỚNG TRONG LIGHTBOX --- */
+        .prev-btn,
+        .next-btn {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -50px;
+            color: var(--highlight);
+            font-weight: bold;
+            font-size: 2rem;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+            -webkit-user-select: none;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+        }
+
+        .next-btn {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .prev-btn:hover,
+        .next-btn:hover {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #fff;
+        }
+
+        /* Số thứ tự ảnh */
+        .image-index {
+            color: #fff;
+            font-family: 'Fira Code', monospace;
+            font-size: 1rem;
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            padding: 8px 12px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="nav-bar">
+        <a href="index.html" class="btn btn-back">
+            < BACK TO BASE</a>
+                <div style="font-family: 'Fira Code'; color: var(--highlight);">002</div>
+    </div>
+
+    <header class="project-hero">
+        <div class="hero-bg" style="background-image: url('./assets/img/project/001_khubepdieuky.png');">
+        </div>
+
+        <div class="hero-content">
+            <div class="tag-container">
+                <span class="tag">SOLO DEV</span>
+                <span class="tag">ACTION RUNNER</span>
+                <span class="tag">PHYSICS</span>
+                <span class="tag">COURSEWORK</span>
+            </div>
+            <h1>FINISHER: LEVEL UP PHASE</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="info-grid">
+
+            <div class="description">
+                <h2>> MISSION_OVERVIEW</h2>
+                <p>
+                    Đây là dự án Action Runner góc nhìn thứ 3 mà <strong>mình</strong> phát triển độc lập (Solo). Lấy cảm hứng từ cơ chế <em>Leviathan Axe</em> huyền thoại trong <em>God of War</em>, người chơi điều khiển nhân vật vừa di chuyển tốc độ cao, vừa ném rìu tiêu diệt quái vật cản đường và phá hủy "Lõi Năng Lượng" cuối màn chơi. Dự án tập trung nặng vào <strong>Toán học (Vector/Bézier Curves)</strong> để xử lý quỹ đạo vũ khí và cảm giác chiến đấu (Game Feel).
+                </p>
+
+                <h2>> TECHNICAL_CHALLENGES</h2>
+                <div style="margin-bottom: 20px;">
+                    <h3 style="font-size: 1.2rem; color: #fff;">1. Leviathan Axe Mechanic (Ném & Gọi Rìu)</h3>
+                    <p>
+                        <strong>Vấn đề:</strong> Làm sao để chiếc rìu khi gọi về bay theo một quỹ đạo cong đẹp mắt chứ không bay thẳng tuột, và phải xoay đúng chiều để cán rìu nằm gọn vào tay nhân vật.<br>
+                        <strong>Giải pháp:</strong> Mình sử dụng công thức <strong>Bézier Curve bậc 2</strong> (Quadratic Bézier) để tính toán đường bay cong. Điểm điều khiển (Control Point) được tính động dựa trên vị trí của người chơi và chiếc rìu để tạo độ cong tự nhiên. Đồng thời sử dụng <code>Quaternion.Slerp</code> để xoay rìu khớp với tay khi bắt được.
+                    </p>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <h3 style="font-size: 1.2rem; color: #fff;">2. Runner & Combat Hybrid</h3>
+                    <p>
+                        <strong>Vấn đề:</strong> Kết hợp giữa việc chạy liên tục (Runner) và đánh nhau (Combat) rất dễ gây rối loạn nhịp độ (Pacing).<br>
+                        <strong>Giải pháp:</strong> Thiết kế màn chơi theo dạng "Arena on Rails" - nhân vật vẫn di chuyển về phía trước nhưng có những đoạn chậm lại (Slow-mo) khi tung đòn kết liễu (Finisher) để người chơi cảm nhận được sức nặng của đòn đánh.
+                    </p>
+                </div>
+
+                <div class="code-block">
+                    <span style="color: #6a9955;">// AxeRecall.cs - Logic gọi rìu về bằng Bezier Curve</span><br>
+                    <span style="color: #569cd6;">private</span> Vector3 <span style="color: #dcdcaa;">GetBezierPoint</span>(<span style="color: #569cd6;">float</span> t, Vector3 p0, Vector3 p1, Vector3 p2) {<br>
+                    &nbsp;&nbsp;<span style="color: #6a9955;">// Công thức B(t) = (1-t)^2 * P0 + 2(1-t)t * P1 + t^2 * P2</span><br>
+                    &nbsp;&nbsp;<span style="color: #569cd6;">float</span> u = 1 - t;<br>
+                    &nbsp;&nbsp;<span style="color: #569cd6;">float</span> tt = t * t;<br>
+                    &nbsp;&nbsp;<span style="color: #569cd6;">float</span> uu = u * u;<br><br>
+                    &nbsp;&nbsp;Vector3 p = uu * p0; <span style="color: #6a9955;">// Điểm bắt đầu (Vị trí rìu)</span><br>
+                    &nbsp;&nbsp;p += 2 * u * t * p1; <span style="color: #6a9955;">// Điểm uốn cong (Curve Point)</span><br>
+                    &nbsp;&nbsp;p += tt * p2; <span style="color: #6a9955;">// Điểm đích (Tay người chơi)</span><br>
+                    &nbsp;&nbsp;<span style="color: #c586c0;">return</span> p;<br>
+                    }
+                </div>
+
+                <h2>> KEY_FEATURES</h2>
+                <ul style="list-style: inside square; color: #ccc; margin-left: 10px;">
+                    <li><strong>Recallable Weapon:</strong> Ném vũ khí đi găm vào tường/quái và gọi về bất cứ lúc nào.</li>
+                    <li><strong>Dynamic Camera:</strong> Camera lắc nhẹ (Screen Shake) khi rìu va chạm và Zoom khi thực hiện đòn kết liễu.</li>
+                    <li><strong>Boss Fight:</strong> Cơ chế phá hủy Core với thanh máu và các đợt quái bảo vệ.</li>
+                </ul>
+            </div>
+
+            <aside class="sidebar">
+                <div class="sidebar-item">
+                    <label>ROLE:</label>
+                    Solo Developer (100%)
+                </div>
+                <div class="sidebar-item">
+                    <label>GENRE:</label>
+                    Action Runner / Hack & Slash
+                </div>
+                <div class="sidebar-item">
+                    <label>TECH STACK:</label>
+                    Unity, Physics System, DOTween
+                </div>
+                <div class="sidebar-item">
+                    <label>BEHIND THE SCENES:</label>
+                    <a href="https://www.youtube.com/watch?v=bdqEVMYeQxY" target="_blank" style="color: var(--accent);">
+                        <i class="fab fa-youtube"></i> Watch Development Process
+                    </a>
+                </div>
+                <div style="margin-top: 30px;">
+                    <a href="#" class="btn" style="width: 100%; text-align: center;">PLAY BUILD (DEMO)</a>
+                </div>
+            </aside>
+        </div>
+
+        <h2>> VISUAL_DATA</h2>
+        <div class="gallery">
+            <img src="./assets/img/project/Screenshot_2.png" data-full="./assets/img/project/Screenshot_2.png"
+                alt="Lấy hamburger để hâm nóng">
+            <img src="./assets/img/project/Screenshot_3.png" data-full="./assets/img/project/Screenshot_3.png"
+                alt="Khu vực lò vi sóng và hướng dẫn :D">
+            <img src="./assets/img/project/Screenshot_4.png" data-full="./assets/img/project/Screenshot_4.png"
+                alt="Quầy bánh">
+            <img src="./assets/img/project/Screenshot_5.png" data-full="./assets/img/project/Screenshot_5.png"
+                alt="Hướng dẫn phân loại bánh">
+            <img src="./assets/img/project/Screenshot_6.png" data-full="./assets/img/project/Screenshot_6.png"
+                alt="Máy tính tiền, khi đặt vật phẩm vào máy thì sẽ tính hoàn thành nhiệm vụ.">
+
+
+        </div>
+
+    </div>
+
+    <footer style="text-align: center; padding: 2rem; border-top: 1px solid #333; margin-top: 4rem;">
+        <p>© 2025 aki GameDev.</p>
+    </footer>
+
+    <div id="myLightbox" class="lightbox-modal">
+        <span class="close-btn" onclick="closeLightbox()">&times;</span>
+        <span class="prev-btn" onclick="plusSlides(-1)">&#10094;</span>
+        <span class="next-btn" onclick="plusSlides(1)">&#10095;</span>
+        <div class="image-index" id="image-index-display"></div> <img class="lightbox-content" id="lightbox-img">
+        <div class="caption" id="caption"></div>
+    </div>
+
+    <script>
+        const lightbox = document.getElementById('myLightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const captionText = document.getElementById('caption');
+        const imageIndexDisplay = document.getElementById('image-index-display');
+        const galleryImages = document.querySelectorAll('.gallery img');
+
+        let currentImageIndex; // Biến lưu index của ảnh hiện tại
+
+        // Hàm mở Lightbox
+        function openLightbox(index) {
+            currentImageIndex = index;
+            showImage(currentImageIndex);
+
+            lightbox.style.display = "flex";
+            setTimeout(() => {
+                lightbox.classList.add('active');
+            }, 10);
+        }
+
+        // Hàm hiển thị ảnh
+        function showImage(index) {
+            if (index < 0) { // Nếu index nhỏ hơn 0, quay về ảnh cuối
+                currentImageIndex = galleryImages.length - 1;
+            } else if (index >= galleryImages.length) { // Nếu index vượt quá, quay về ảnh đầu
+                currentImageIndex = 0;
+            }
+
+            const imgElement = galleryImages[currentImageIndex];
+            lightboxImg.src = imgElement.getAttribute('data-full'); // Lấy ảnh full
+            captionText.innerText = imgElement.alt; // Lấy alt làm caption
+            imageIndexDisplay.innerText = `${currentImageIndex + 1} / ${galleryImages.length}`; // Hiển thị số thứ tự
+        }
+
+        // Hàm điều hướng tới/lui
+        function plusSlides(n) {
+            showImage(currentImageIndex += n);
+        }
+
+        // Gắn sự kiện click cho từng ảnh trong gallery
+        galleryImages.forEach((img, index) => {
+            img.addEventListener('click', function () {
+                openLightbox(index); // Mở lightbox với index của ảnh được click
+            });
+        });
+
+        // Hàm đóng lightbox
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            setTimeout(() => {
+                lightbox.style.display = "none";
+            }, 300);
+        }
+
+        // Click ra ngoài vùng ảnh hoặc bấm ESC cũng đóng
+        lightbox.addEventListener('click', function (e) {
+            if (e.target === lightbox) {
+                closeLightbox();
+            }
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === "Escape") { // Phím ESC
+                closeLightbox();
+            }
+            if (e.key === "ArrowLeft") { // Phím mũi tên trái
+                plusSlides(-1);
+            }
+            if (e.key === "ArrowRight") { // Phím mũi tên phải
+                plusSlides(1);
+            }
+        });
+
+    </script>
+</body>
+
+</html>

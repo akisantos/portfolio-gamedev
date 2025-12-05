@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission Archive | All Projects</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Fira+Code:wght@400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        /* --- COPY CSS CŨ QUA CHO ĐỒNG BỘ --- */
+        :root {
+            --bg-color: #0d0e15;
+            --card-bg: #161821;
+            --text-main: #a6accd;
+            --accent: #ff0055;
+            --highlight: #00e5ff;
+            --grid-color: rgba(0, 229, 255, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: crosshair;
+        }
+
+        body {
+            font-family: 'VT323', monospace;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.4;
+            font-size: 1.3rem;
+            background-image:
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 40px 40px;
+            min-height: 100vh;
+        }
+
+        h1,
+        h2,
+        h3,
+        .btn,
+        .tag,
+        .logo,
+        .section-title {
+            /* Mẹo: Tao để VT323 dự phòng ngay phía sau. 
+       Chữ nào Press Start 2P không hiển thị được (như chữ Ự, Ệ) 
+       thì nó sẽ tự mượn thằng VT323 để hiển thị thay vì nhảy về Arial */
+            font-family: 'Press Start 2P', 'VT323', cursive;
+            text-transform: uppercase;
+            line-height: 1.5;
+            /* Giãn dòng ra xíu cho đỡ dính vì font này to */
+        }
+
+        /* --- Header Riêng Cho Trang Này --- */
+        header {
+            padding: 1.5rem 5%;
+            background: rgba(13, 14, 21, 0.95);
+            border-bottom: 2px solid var(--highlight);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            /* Căn giữa theo chiều dọc */
+            gap: 20px;
+            /* Khoảng cách giữa nút Back và Title */
+        }
+
+        /* Class mới cho nút Back Icon */
+        .btn-back-icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 45px;
+            height: 45px;
+            background: transparent;
+            border: 2px solid var(--highlight);
+            color: var(--highlight);
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: 0.3s;
+            /* Tạo hình vuông hoặc hơi bo góc tùy mày */
+            border-radius: 5px;
+        }
+
+        .btn-back-icon:hover {
+            background: var(--highlight);
+            color: #000;
+            box-shadow: 0 0 15px var(--highlight);
+            transform: scale(1.1);
+        }
+
+        /* Canh chỉnh lại Title chút cho đẹp */
+        .page-title h1 {
+            margin-bottom: 5px;
+            line-height: 1;
+        }
+
+        .page-title p {
+            margin: 0;
+        }
+
+        .page-title h1 {
+            color: #fff;
+            font-size: 1.8rem;
+            text-shadow: 3px 3px 0 var(--accent);
+        }
+
+        .page-title p {
+            color: var(--highlight);
+            font-family: 'Fira Code';
+            font-size: 0.9rem;
+        }
+
+        /* --- Grid Dự Án --- */
+        .container {
+            padding: 4rem 5%;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            border: 1px solid #333;
+            position: relative;
+            transition: transform 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--highlight);
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.2);
+        }
+
+        .project-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-bottom: 1px solid #333;
+            filter: grayscale(30%);
+            transition: 0.3s;
+        }
+
+        .project-card:hover .project-img {
+            filter: grayscale(0%);
+        }
+
+        .project-info {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-info h3 {
+            font-size: 1.1rem;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .tech-stack {
+            color: var(--accent);
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            font-family: 'Fira Code';
+        }
+
+        .desc {
+            font-size: 1rem;
+            color: #bbb;
+            margin-bottom: 1rem;
+            flex-grow: 1;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: var(--accent);
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.8rem;
+            border: none;
+            transition: 0.2s;
+            text-align: center;
+            margin-top: auto;
+            /* Đẩy nút xuống đáy */
+        }
+
+        .btn:hover {
+            background: var(--highlight);
+            color: #000;
+        }
+
+        .btn-back {
+            background: transparent;
+            border: 2px solid var(--highlight);
+            color: var(--highlight);
+            margin-right: auto;
+            /* Căn trái */
+        }
+
+        .btn-back:hover {
+            background: var(--highlight);
+            color: #000;
+        }
+
+        /* Search bar giả lập */
+        .filter-bar {
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-tag {
+            padding: 5px 15px;
+            border: 1px solid #444;
+            color: #888;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .filter-tag.active {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: rgba(255, 0, 85, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <a href="index.html" class="btn-back-icon">
+            <i class="fas fa-chevron-left"></i>
+        </a>
+
+        <div class="page-title">
+            <h1>MISSION ARCHIVE</h1>
+            <p>> LOADER.EXE /ALL_PROJECTS</p>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <div class="filter-bar">
+            <div class="filter-tag active" onclick="filterProjects('all')">ALL</div>
+            <div class="filter-tag" onclick="filterProjects('unity-3d')">UNITY 3D</div>
+            <div class="filter-tag" onclick="filterProjects('unity-2d')">UNITY 2D</div>
+            <div class="filter-tag" onclick="filterProjects('prototype')">PROTOTYPES</div>
+            <div class="filter-tag" onclick="filterProjects('coursework')">COURSEWORK</div>
+            <div class="filter-tag" onclick="filterProjects('vr')">VR</div>
+            <div class="filter-tag" onclick="filterProjects('personal')">PERSONAL</div>
+        </div>
+
+        <div class="projects-grid">
+
+            <div class="project-card" data-category="unity-3d coursework vr">
+                <img src="./assets/img/project/001_khubepdieuky.png" class="project-img">
+                <div class="project-info">
+                    <h3>THE MAGICAL KITCHEN</h3>
+                    <div class="tech-stack">[COURSEWORK] [UNITY 3D] [VR]</div>
+                    <p class="desc">Trò chơi là một mô phỏng quản lý quầy bếp góc nhìn thứ nhất, nơi người chơi phải chạy đua với thời gian để phục vụ các món ăn theo yêu cầu. </p>
+                    <a href="./khu-bep-dieu-ky.html" class="btn">XEM FILE</a>
+                </div>
+            </div>
+
+            <div class="project-card" data-category="unity-3d coursework">
+                <img src="https://via.placeholder.com/400x250/333/00e5ff" class="project-img">
+                <div class="project-info">
+                    <h3>FINISHER LEVEL UP PHASE</h3>
+                    <div class="tech-stack">[UNITY 2D] [PHYSICS]</div>
+                    <p class="desc">Lấy cảm hứng từ cơ chế <em>Leviathan Axe</em> huyền thoại trong <em>God of War</em>, người chơi điều khiển nhân vật vừa di chuyển tốc độ cao, vừa ném rìu tiêu diệt quái vật cản đường và phá hủy "Lõi Năng Lượng" cuối màn chơi. Dự án tập trung nặng vào <strong>Toán học (Vector/Bézier Curves)</strong> để xử lý quỹ đạo vũ khí và cảm giác chiến đấu (Game Feel).</p>
+                    <a href="./finisher.html" class="btn">XEM FILE</a>
+                </div>
+            </div>
+
+            <div class="project-card" data-category="prototype unity-3d coursework vr">
+                <img src="https://via.placeholder.com/400x250/333/ffff00" class="project-img">
+                <div class="project-info">
+                    <h3>AVIATION ASSEMBLY</h3>
+                    <div class="tech-stack">[PROTOTYPES] [UNITY 3D] [COURSEWORK] [VR]</div>
+                    <p class="desc">Mô phỏng VR Kỹ thuật Chính xác cho sinh viên ngành Hàng không. Dự án đòi hỏi kỹ năng xử lý Sequential
+                    Assembly Logic (Logic lắp ráp theo từng bước), đảm bảo người dùng tuân thủ quy trình.</p>
+                    <a href="project-detail.html" class="btn">XEM FILE</a>
+                </div>
+            </div>
+
+        
+
+            <div class="project-card" data-category="personal prototype">
+                <img src="https://via.placeholder.com/400x250/333/ff00ff" class="project-img">
+                <div class="project-info">
+                    <h3>CANDY-3</h3>
+                    <div class="tech-stack">[PERSONAL] [PROTOTYPES]</div>
+                    <p class="desc">Tái hiện trò chơi kim cương kinh điển.</p>
+                    <a href="#" class="btn">XEM FILE</a>
+                </div>
+            </div>
+
+            <div class="project-card" data-category="personal">
+                <img src="https://via.placeholder.com/400x250/333/ff00ff" class="project-img">
+                <div class="project-info">
+                    <h3>DAOLUA</h3>
+                    <div class="tech-stack">[PERSONAL]</div>
+                    <p class="desc">Something is being cooked.</p>
+                    <a href="#" class="btn">XEM FILE</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script>
+        function filterProjects(category) {
+        // 1. Xử lý giao diện nút bấm (Active state) - GIỮ NGUYÊN
+        const buttons = document.querySelectorAll('.filter-tag');
+        buttons.forEach(btn => {
+            btn.classList.remove('active');
+            if(btn.getAttribute('onclick').includes(category)) {
+                btn.classList.add('active');
+            }
+        });
+
+        // 2. Xử lý ẩn/hiện Projects - NÂNG CẤP LOGIC Ở ĐÂY
+        const projects = document.querySelectorAll('.project-card');
+
+        projects.forEach(card => {
+            // Lấy chuỗi category trong thẻ (ví dụ: "unity-3d prototype")
+            const rawCategories = card.getAttribute('data-category');
+            
+            // Chuyển chuỗi đó thành một mảng các từ (ví dụ: ["unity-3d", "prototype"])
+            // Nếu không có data-category thì gán mảng rỗng để tránh lỗi
+            const cardCategories = rawCategories ? rawCategories.split(' ') : [];
+
+            // Logic kiểm tra:
+            // Nếu chọn 'all' -> Hiện
+            // HOẶC nếu danh sách category của card CÓ CHỨA category đang chọn -> Hiện
+            if (category === 'all' || cardCategories.includes(category)) {
+                card.style.display = 'flex';
+                card.style.animation = 'none'; // Reset animation để nó chạy lại
+                card.offsetHeight; /* Trigger reflow hack để reset animation */
+                card.style.animation = 'fadeIn 0.5s ease';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+    </script>
+
+    <style>
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</body>
+
+</html>
