@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aki The Builder | Mission Archives</title>
+    <!-- Import Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -720,9 +721,38 @@
             color: #000;
         }
 
+        /* --- MEDIA QUERY CHO MOBILE (FIXED) --- */
         @media (max-width: 768px) {
+            /* 1. Fix Navbar */
+            header {
+                flex-direction: column; /* Xếp dọc Logo và Menu */
+                gap: 15px;
+                padding: 1rem;
+            }
+
+            .nav-group {
+                width: 100%;
+                justify-content: center; /* Căn giữa Menu */
+                flex-wrap: wrap; /* Cho phép xuống dòng nếu chật */
+                gap: 15px;
+            }
+
+            .nav-links {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+            }
+
+            .nav-links a {
+                margin: 0 5px;
+                font-size: 0.9rem;
+            }
+
+            /* 2. Fix các phần khác (Giữ nguyên logic cũ) */
             .detail-content {
                 grid-template-columns: 1fr;
+                padding: 0 1rem; /* Thêm padding cho nội dung không dính lề */
             }
 
             .hero-title h1 {
@@ -730,13 +760,14 @@
             }
 
             .hero-title .name-text {
-                font-size: 2.5rem;
+                font-size: 2.2rem; /* Giảm size tên chút cho vừa màn hình nhỏ */
             }
 
             .about-section {
                 gap: 2rem;
                 flex-direction: column;
                 text-align: center;
+                padding: 4rem 1rem; /* Giảm padding ngang */
             }
 
             .data-row {
@@ -746,6 +777,13 @@
 
             .data-label {
                 text-align: center;
+                margin-bottom: 5px;
+                display: block; /* Label xuống dòng cho dễ đọc */
+            }
+            
+            /* Fix Hero Padding */
+            #hero {
+                padding: 0 10px;
             }
         }
     </style>
@@ -797,7 +835,7 @@
             <div class="about-text">
                 <h2 data-lang-key="char_data">> CHARACTER_DATA</h2>
                 <p style="margin-bottom: 20px;" data-lang-key="intro">
-                    
+
                 </p>
                 <!-- <div class="data-row">
                     <span class="data-label">LEVEL:</span> <span data-lang-key="level_val">Junior / Entry-Level Unity
@@ -812,7 +850,7 @@
                 </div>
                 <div class="data-row">
                     <span class="data-label">EMAIL:</span> <span>aki.finding@gmail.com</span> -->
-                </div>
+            </div>
             </div>
         </section>
 
@@ -946,91 +984,8 @@
 
         let currentLang = 'vi'; // Mặc định tiếng Việt cho thân thiện
 
-        // --- PROJECTS DATA (Bilingual) ---
 
         const projectsData = [
-            {
-                "id": 1,
-                "slug": "khu-bep-dieu-ky",
-                "category": [
-                    "unity",
-                    "vr"
-                ],
-                "tags": "[UNITY 3D] [VR] [SIMULATION]",
-                "img": "./assets/img/project/001_khubepdieuky.png",
-                "title": {
-                    "vi": "KHU BẾP DIỆU KỲ",
-                    "en": "THE MAGICAL KITCHEN"
-                },
-                "desc": {
-                    "vi": "Đây là đồ án môn học tâm huyết mà mình đã thực hiện cùng team trong đó mình đảm nhận các khâu từ Game Design, Lập trình, Thiết kế đồ họa. Trò chơi là một mô phỏng quản lý quầy bếp góc nhìn thứ nhất, nơi người chơi phải chạy đua với thời gian để phục vụ các món ăn theo yêu cầu.",
-                    "en": "This is a project I poured my heart into working on with my team, where I handled everything from Game Design and Programming to Graphic Design. The game is a first-person kitchen management simulation where players race against time to serve dishes as requested."
-                },
-                "role": {
-                    "vi": "Designer, Dev",
-                    "en": "Designer, Dev"
-                },
-                "time": {
-                    "vi": "Thg 7 - Thg 9 2021",
-                    "en": "Jul 2021 - Sep 2021"
-                },
-                "stack": "Unity 3D, XR Interaction Toolkit, Blender, Photoshop",
-                "demoLink": "https://youtu.be/_vi-Wh3F7Ow",
-                "techContent": {
-                    "vi": "<h3 style=\"font-size: 1.2rem; color: #fff;\">1. Grabbing & Pivot Alignment</h3>\n                    <p>\n                        <strong>Vấn đề:</strong> Khi sử dụng Raycast để cầm nắm vật thể, object thường bị lệch hoặc xoay không đúng hướng mong muốn do sai Pivot, gây cảm giác khó chịu khi đặt bánh vào lò.<br>\n                        <strong>Giải pháp:</strong> Mình đã tinh chỉnh lại Pivot của toàn bộ model 3D và viết logic offset vị trí khi <code>OnGrab</code> để vật thể luôn nằm gọn trong tay người chơi một cách tự nhiên nhất.\n                    </p>\n\n\n<h3 style=\"font-size: 1.2rem; color: #fff;\">2. Cooking Logic (Update vs State Machine)</h3>\n                    <p>\n                        <strong>Vấn đề:</strong> Xử lý logic nướng bánh. Lúc đó do chưa áp dụng State Machine Pattern nên việc kiểm soát trạng thái (Sống -> Chín -> Cháy) khá phức tạp.<br>\n                        <strong>Giải pháp:</strong> Sử dụng <code>Collider Trigger</code> để phát hiện vật phẩm vào lò và xử lý bộ đếm thời gian (Timer) trực tiếp trong hàm <code>Update</code>. <em>(Bài học rút ra: Sau dự án này mình đã tìm hiểu và áp dụng State Machine cho các dự án sau để code sạch và dễ bảo trì hơn).</em>\n                    </p>",
-                    "en": "<h3 style=\"font-size: 1.2rem; color: #fff;\">1. Grabbing & Pivot Alignment</h3>\n<p>\n\n<strong>Problem:</strong> When using Raycast to grasp objects, the object is often misaligned or rotated incorrectly due to incorrect pivot, causing discomfort when placing the cake in the oven.<br>\n\n<strong>Solution:</strong> I have adjusted the pivot of the entire 3D model and written logic to offset the position when <code>OnGrab</code> so that the object always fits comfortably in the player's hand in the most natural way.\n\n</p>\n\n<h3 style=\"font-size: 1.2rem; color: #fff;\">2. Cooking Logic (Update vs State Machine)</h3>\n\n<p>\n\n<strong>Problem:</strong> Handling baking logic. At that time, because the State Machine Pattern hadn't been implemented yet, controlling the state (Live -> Cooked -> Burned) was quite complex.\n\nSolution: Use Collider Trigger to detect items entering the furnace and handle the timer directly in the Update function. (Lesson learned: After this project, I researched and applied State Machine to subsequent projects to create cleaner and more maintainable code.)"
-                },
-                "gallery": [
-                    {
-                        "src": "./assets/img/project/Screenshot_3.png",
-                        "cap": {
-                            "vi": "Bảng hướng dẫn",
-                            "en": "Guide Board"
-                        }
-                    },
-                    {
-                        "src": "./assets/img/project/Screenshot_4.png",
-                        "cap": {
-                            "vi": "Quầy bánh",
-                            "en": "Pastry Counter"
-                        }
-                    }
-                ]
-            },
-            {
-                "id": 2,
-                "slug": "finisher",
-                "category": [
-                    "unity",
-                    "solo",
-                    "action"
-                ],
-                "tags": "[SOLO] [ACTION] [PHYSICS]",
-                "img": "./assets/img/project/Screenshot_2.png",
-                "title": {
-                    "vi": "FINISHER",
-                    "en": "FINISHER"
-                },
-                "desc": {
-                    "vi": "Game chặt chém.",
-                    "en": "Hack n Slash game."
-                },
-                "role": {
-                    "vi": "Solo Dev",
-                    "en": "Solo Dev"
-                },
-                "time": {
-                    "vi": "Cá nhân",
-                    "en": "Personal"
-                },
-                "stack": "Unity, DOTween",
-                "demoLink": "",
-                "techContent": {
-                    "vi": "<p>Code logic...</p>",
-                    "en": "<p>Code logic...</p>"
-                },
-                "gallery": []
-            },
             {
                 "id": 3,
                 "slug": "the-offer",
@@ -1038,14 +993,14 @@
                     "unity",
                     "solo"
                 ],
-                "tags": "[NEW]",
+                "tags": "[PERSONAL]",
                 "img": "./assets/img/theOffer/the-offer.png",
                 "title": {
                     "vi": "THE OFFER: Việc nhẹ lương cao",
                     "en": "THE OFFER"
                 },
                 "desc": {
-                    "vi": "Một dự án cá nhân của mình đang thực hiện. \"The Offer\" là dự án game kinh dị sinh tồn góc nhìn thứ nhất (First-person Survival Horror) với phong cách đồ họa Retro PS1. Game lấy cảm hứng từ các vụ lừa đảo \"việc nhẹ lương cao\" xuyên biên giới, nơi người chơi phải đối mặt với áp lực tâm lý và tìm cách sinh tồn trong một tổ chức tội phạm công nghệ cao.\n\n",
+                    "vi": "Một dự án cá nhân của mình đang thực hiện. \"The Offer\" là dự án game kinh dị sinh tồn góc nhìn thứ nhất (First-person Survival Horror) với phong cách đồ họa Retro PS1. Game lấy cảm hứng từ các vụ lừa đảo \"việc nhẹ lương cao\" xuyên biên giới, nơi người chơi phải đối mặt với áp lực tâm lý và tìm cách sinh tồn trong một tổ chức tội phạm công nghệ cao.",
                     "en": "One of my personal projects I'm working on is \"The Offer,\" a first-person survival horror game with a retro PS1 graphic style. The game is inspired by cross-border \"easy job, high pay\" scams, where players face psychological pressure and must find a way to survive within a high-tech criminal organization."
                 },
                 "role": {
@@ -1059,8 +1014,8 @@
                 "stack": "Unity3D",
                 "demoLink": "https://youtu.be/JN2nJsEm2_U",
                 "techContent": {
-                    "vi": "<h4>\n    Tính năng đã thực hiện:\n</h4>\n<ul>\n    <li data-list-item-id=\"e824c8a27e0466e8eb4c93be69b91c4ed\">\n        <strong>Hệ điều hành ảo (AkiOS):</strong> Trải nghiệm cảm giác bị giam lỏng trước màn hình máy tính với hệ thống app Zola, Telegrum, Facepunk mô phỏng chân thực. Dùng để tương tác mạng xã hội, nhắn tin với NPC, thực hiện lừa đảo qua tin nhắn và coding.\n    </li>\n    <li data-list-item-id=\"ec23db0bcdaa85fc212b7529b37c78abc\">\n        <strong>Gameplay \"Coding Test\":</strong> Minigame gõ code dồn dập kết hợp yếu tố nhịp điệu (Rhythm), tạo áp lực thời gian thực nghẹt thở.\n    </li>\n    <li data-list-item-id=\"ec3d520929c1061f083167b3b2148fe08\">\n        <strong>Cốt truyện tương tác:</strong> Hệ thống nhiệm vụ dẫn dắt người chơi qua các đoạn hội thoại, nhắn tin với NPC và manh mối ẩn giấu.\n    </li>\n    <li data-list-item-id=\"e484d5af33a8dff6988d747bf0c319edb\">\n        <strong>Đồ họa PS1</strong>: Phong cách Low-poly, Dithering và CRT Filter tạo không khí u ám, ngột ngạt đặc trưng của thập niên 90.\n    </li>\n</ul>",
-                    "en": "<h4>\n    Features implemented:\n</h4>\n<ul>\n    <li data-list-item-id=\"e67b7f6b1cd776e51c5e342fa34877083\">\n        <strong>Virtual operating system (AkiOS):</strong> Experience the feeling of being confined to a computer screen with realistic simulations of apps like Zola, Telegrum, and Facepunk. <span class=\"HwtZe jCAhz ChMk0b ryNqvb\" jsname=\"W297wb\" jsaction=\"click:PDNqTc,GFf3ac,qlVvte;contextmenu:Nqw7Te,QP7LD; mouseout:Nqw7Te; mouseover:PDNqTc,c2aHje\" jscontroller=\"BiTO4b\" lang=\"en\" dir=\"ltr\">Used for social networking, messaging with NPCs, scamming via text messages, and coding.</span>\n    </li>\n    <li data-list-item-id=\"ebd1ac977ca30ea62cc291ab6e1fc799b\">\n        <strong>\"Coding Test\" gameplay</strong>: A fast-paced coding minigame combined with rhythm elements, creating suffocating real-time pressure.\n    </li>\n    <li data-list-item-id=\"e5f2c758f1e9e7337597ae77a89e5a011\">\n        <strong>Interactive storyline:</strong> A quest system guides players through dialogues, messaging with NPCs, and hidden clues.\n    </li>\n    <li data-list-item-id=\"e60076d18ff5a73942b23037adaa729b4\">\n        <strong>PS1 graphics:</strong> Low-poly, dithering, and CRT filter styles create the gloomy, suffocating atmosphere characteristic of the 90s.\n    </li>\n</ul>"
+                    "vi": "<h3>T&iacute;nh năng đ&atilde; thực hiện</h3>\n<h4><strong>Player di chuyển</strong></h4>\n<p>Nhập vai v&agrave;o nh&acirc;n vật c&oacute; t&ecirc;n l&agrave; Duy Anh, người chơi c&oacute; thể di chuyển v&agrave; tương t&aacute;c với vật thể trong tr&ograve; chơi. Để thực hiện được việc di chuyển n&agrave;y, m&igrave;nh tạo một class đảm nhiệm việc quản l&yacute; t&iacute;n hiệu nhập đầu v&agrave;o v&agrave; một class xử l&yacute; việc di chuyển kết hợp với Character Controller.</p>\n<p><img src=\"assets\\img\\theOffer\\the-offer-player-inspector.png\" alt=\"\" width=\"100%\" /></p>\n<h4><strong>Hệ điều h&agrave;nh ảo (AkiOS)</strong></h4>\n<p>Trong cốt truyện của game c&oacute; nhiều ph&acirc;n đoạn sử dụng m&aacute;y t&iacute;nh, điều n&agrave;y mang đến cho player trải nghiệm cảm gi&aacute;c bị giam lỏng trước m&agrave;n h&igrave;nh m&aacute;y t&iacute;nh với hệ thống app Zola, Telegrum, Facepunk m&ocirc; phỏng ch&acirc;n thực. D&ugrave;ng để tương t&aacute;c mạng x&atilde; hội, nhắn tin với NPC, thực hiện lừa đảo qua tin nhắn v&agrave; coding.</p>\n<p><img src=\"assets\\img\\theOffer\\the_offer_akios.png\" alt=\"\" width=\"100%\" /></p>\n<p>&nbsp;</p>\n<h4><strong>Mini-game 'Giải code challenge'</strong></h4>\n<p>Minigame phục vụ cốt truyện sau khi player nhận file code từ HR mở l&ecirc;n th&igrave; player phải giải thử th&aacute;ch coding để đậu v&ograve;ng phỏng vấn lập tr&igrave;nh. V&igrave; m&aacute;y t&iacute;nh của nh&acirc;n vật ch&iacute;nh qu&aacute; yếu n&ecirc;n khi code khiến m&aacute;y bị lỗi, player phải tắt n&oacute; đ&uacute;ng l&uacute;c trước khi m&aacute;y sập.</p>\n<p>Minigame g&otilde; code dồn dập kết hợp yếu tố nhịp điệu (Rhythm), tạo &aacute;p lực thời gian thực nghẹt thở.</p>\n<p>&nbsp;</p>\n<h4><strong>Hệ thống QuestSystem</strong></h4>\n<p>Hệ thống nhiệm vụ dẫn dắt người chơi qua c&aacute;c đoạn hội thoại, nhắn tin với NPC v&agrave; manh mối ẩn giấu.&nbsp; Hỗ trợ hệ thống save/load v&agrave;o file JSON.<img src=\"assets\\img\\theOffer\\the-offer-questmanager-inspector.png\" alt=\"\" width=\"100%\" /></p>\n<p>&nbsp;</p>\n<h4><strong>Đồ hoạ PS1</strong></h4>\n<p>Phong c&aacute;ch Low-poly, Dithering v&agrave; CRT Filter tạo kh&ocirc;ng kh&iacute; u &aacute;m, ngột ngạt. Model được thiết kế với Blender sau đ&oacute; import v&agrave;o Unity. Sau đ&oacute; giảm độ ph&acirc;n giải của camera với RenderTexture để tạo hiệu ứng vỡ pixel.</p>\n<p><img src=\"assets\\img\\theOffer\\the-offer.png\" alt=\"\" width=\"100%\" /></p>\n<p>&nbsp;</p>\n<p>Nội dung sẽ được tiếp tục cập nhật sau khi game c&oacute; t&iacute;nh năng mới :v</p>\n<p>&nbsp;</p>",
+                    "en": "<h3>Features implemented</h3>\n<h4><strong>Player movement</strong></h4>\n<p>Playing as the character named Duy Anh, the player can move and interact with objects in the game. To implement this movement, I created a class to manage input signals and a class to process them. Movement is combined with the Character Controller.</p>\n<p><img src=\"assets\\img\\theOffer\\the-offer-player-inspector.png\" alt=\"\" width=\"100%\" /></p>\n<h4><strong>Virtual Operating System (AkiOS)</strong></h4>\n<p>In the game's storyline, there are many segments using computers, which gives players the experience of being confined in front of a computer screen with the Zola, Telegrum, and Facepunk app systems that simulate realism. Used for social network interaction, messaging with NPCs, and carrying out scams via text messages and coding.</p>\n<p><img src=\"assets\\img\\theOffer\\the_offer_akios.png\" alt=\"\" width=\"100%\" /></p>\n<p>&nbsp;</p>\n<h4><strong>Mini-game 'Solve the Code Challenge'</strong></h4>\n<p>This minigame serves the storyline. After the player receives the code file from HR and opens it, the player must solve a coding challenge to pass the programming interview. Because the main character's computer is too weak, if the code causes the computer to malfunction, the player must turn it off just before it crashes.</p>\n<p>Minigame g&otilde; The fast-paced code, combined with rhythm elements, creates a suffocating real-time pressure.\n\nQuest System\n\nThe quest system guides the player through dialogues, messaging with NPCs, and hidden clues. Supports save/load system to JSON files.\n\nPS1 Graphics\n\nLow-poly, Dithering, and CRT Filtering create a gloomy, suffocating atmosphere. The model was designed with Blender and then imported into Unity. Afterward, the camera resolution was reduced using RenderTexture to create a pixelated effect.</p>\n<p><img src=\"assets\\img\\theOffer\\the-offer.png\" alt=\"\" width=\"100%\" /></p>\n<p>&nbsp;</p>\n<p>Content will be updated after the game has new features :v</p>\n<p>&nbsp;</p>"
                 },
                 "gallery": [
                     {
