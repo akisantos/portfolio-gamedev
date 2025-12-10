@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project File: FINISHER_LEVEL_UP_PHASE | System Log</title>
+    <title>Project File: The Offer | System Log</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Fira+Code:wght@400&display=swap"
         rel="stylesheet">
@@ -28,7 +28,7 @@
         }
 
         body {
-            font-family: 'VT323', monospace;
+            font-family: 'VT323', sans-serif;
             background-color: var(--bg-color);
             color: var(--text-main);
             line-height: 1.6;
@@ -80,7 +80,6 @@
             background: url('https://wallpapers.com/images/featured/1920x1080-aesthetic-glrfk0ntspz3tvxg.jpg') no-repeat center center/cover;
             z-index: -1;
             filter: brightness(0.4);
-            /* Làm tối ảnh để chữ nổi lên */
         }
 
         .hero-content h1 {
@@ -101,7 +100,7 @@
             color: #fff;
             padding: 5px 10px;
             font-size: 0.8rem;
-            font-family: 'Press Start 2P';
+            font-family: 'Press Start 2P', sans-serif;
         }
 
         /* --- MAIN CONTENT --- */
@@ -356,7 +355,7 @@
     <div class="nav-bar">
         <a href="index.html" class="btn btn-back">
             < BACK TO BASE</a>
-                <div style="font-family: 'Fira Code'; color: var(--highlight);">002</div>
+                <div style="font-family: 'Fira Code'; color: var(--highlight);">001</div>
     </div>
 
     <header class="project-hero">
@@ -365,12 +364,9 @@
 
         <div class="hero-content">
             <div class="tag-container">
-                <span class="tag">SOLO DEV</span>
-                <span class="tag">ACTION RUNNER</span>
-                <span class="tag">PHYSICS</span>
-                <span class="tag">COURSEWORK</span>
+                <span class="tag">UNITY 3D</span>
             </div>
-            <h1>FINISHER: LEVEL UP PHASE</h1>
+            <h1>Khu Bếp Diệu Kỳ (The Magical Kitchen)</h1>
         </div>
     </header>
 
@@ -380,69 +376,66 @@
             <div class="description">
                 <h2>> MISSION_OVERVIEW</h2>
                 <p>
-                    Đây là dự án Action Runner góc nhìn thứ 3 mà <strong>mình</strong> phát triển độc lập (Solo). Lấy cảm hứng từ cơ chế <em>Leviathan Axe</em> huyền thoại trong <em>God of War</em>, người chơi điều khiển nhân vật vừa di chuyển tốc độ cao, vừa ném rìu tiêu diệt quái vật cản đường và phá hủy "Lõi Năng Lượng" cuối màn chơi. Dự án tập trung nặng vào <strong>Toán học (Vector/Bézier Curves)</strong> để xử lý quỹ đạo vũ khí và cảm giác chiến đấu (Game Feel).
+                    Đây là đồ án môn học tâm huyết mà <strong>mình</strong> đã thực hiện toàn bộ các khâu từ Lập trình, Thiết kế đồ họa (Art) đến Game Design. Trò chơi là một mô phỏng quản lý quầy bếp góc nhìn thứ nhất, nơi người chơi phải chạy đua với thời gian để phục vụ các món ăn theo yêu cầu. Dự án là minh chứng cho khả năng làm việc độc lập và tư duy sản phẩm trọn vẹn của mình.
                 </p>
 
                 <h2>> TECHNICAL_CHALLENGES</h2>
                 <div style="margin-bottom: 20px;">
-                    <h3 style="font-size: 1.2rem; color: #fff;">1. Leviathan Axe Mechanic (Ném & Gọi Rìu)</h3>
+                    <h3 style="font-size: 1.2rem; color: #fff;">1. Grabbing & Pivot Alignment</h3>
                     <p>
-                        <strong>Vấn đề:</strong> Làm sao để chiếc rìu khi gọi về bay theo một quỹ đạo cong đẹp mắt chứ không bay thẳng tuột, và phải xoay đúng chiều để cán rìu nằm gọn vào tay nhân vật.<br>
-                        <strong>Giải pháp:</strong> Mình sử dụng công thức <strong>Bézier Curve bậc 2</strong> (Quadratic Bézier) để tính toán đường bay cong. Điểm điều khiển (Control Point) được tính động dựa trên vị trí của người chơi và chiếc rìu để tạo độ cong tự nhiên. Đồng thời sử dụng <code>Quaternion.Slerp</code> để xoay rìu khớp với tay khi bắt được.
+                        <strong>Vấn đề:</strong> Khi sử dụng Raycast để cầm nắm vật thể, object thường bị lệch hoặc xoay không đúng hướng mong muốn do sai Pivot, gây cảm giác khó chịu khi đặt bánh vào lò.<br>
+                        <strong>Giải pháp:</strong> Mình đã tinh chỉnh lại Pivot của toàn bộ model 3D và viết logic offset vị trí khi <code>OnGrab</code> để vật thể luôn nằm gọn trong tay người chơi một cách tự nhiên nhất.
                     </p>
                 </div>
 
                 <div style="margin-bottom: 20px;">
-                    <h3 style="font-size: 1.2rem; color: #fff;">2. Runner & Combat Hybrid</h3>
+                    <h3 style="font-size: 1.2rem; color: #fff;">2. Cooking Logic (Update vs State Machine)</h3>
                     <p>
-                        <strong>Vấn đề:</strong> Kết hợp giữa việc chạy liên tục (Runner) và đánh nhau (Combat) rất dễ gây rối loạn nhịp độ (Pacing).<br>
-                        <strong>Giải pháp:</strong> Thiết kế màn chơi theo dạng "Arena on Rails" - nhân vật vẫn di chuyển về phía trước nhưng có những đoạn chậm lại (Slow-mo) khi tung đòn kết liễu (Finisher) để người chơi cảm nhận được sức nặng của đòn đánh.
+                        <strong>Vấn đề:</strong> Xử lý logic nướng bánh. Lúc đó do chưa áp dụng State Machine Pattern nên việc kiểm soát trạng thái (Sống -> Chín -> Cháy) khá phức tạp.<br>
+                        <strong>Giải pháp:</strong> Sử dụng <code>Collider Trigger</code> để phát hiện vật phẩm vào lò và xử lý bộ đếm thời gian (Timer) trực tiếp trong hàm <code>Update</code>. <em>(Bài học rút ra: Sau dự án này mình đã tìm hiểu và áp dụng State Machine cho các dự án sau để code sạch và dễ bảo trì hơn).</em>
                     </p>
                 </div>
 
                 <div class="code-block">
-                    <span style="color: #6a9955;">// AxeRecall.cs - Logic gọi rìu về bằng Bezier Curve</span><br>
-                    <span style="color: #569cd6;">private</span> Vector3 <span style="color: #dcdcaa;">GetBezierPoint</span>(<span style="color: #569cd6;">float</span> t, Vector3 p0, Vector3 p1, Vector3 p2) {<br>
-                    &nbsp;&nbsp;<span style="color: #6a9955;">// Công thức B(t) = (1-t)^2 * P0 + 2(1-t)t * P1 + t^2 * P2</span><br>
-                    &nbsp;&nbsp;<span style="color: #569cd6;">float</span> u = 1 - t;<br>
-                    &nbsp;&nbsp;<span style="color: #569cd6;">float</span> tt = t * t;<br>
-                    &nbsp;&nbsp;<span style="color: #569cd6;">float</span> uu = u * u;<br><br>
-                    &nbsp;&nbsp;Vector3 p = uu * p0; <span style="color: #6a9955;">// Điểm bắt đầu (Vị trí rìu)</span><br>
-                    &nbsp;&nbsp;p += 2 * u * t * p1; <span style="color: #6a9955;">// Điểm uốn cong (Curve Point)</span><br>
-                    &nbsp;&nbsp;p += tt * p2; <span style="color: #6a9955;">// Điểm đích (Tay người chơi)</span><br>
-                    &nbsp;&nbsp;<span style="color: #c586c0;">return</span> p;<br>
+                    <span style="color: #6a9955;">// MicrowaveLogic.cs - Xử lý nướng bánh</span><br>
+                    <span style="color: #569cd6;">private void</span> OnTriggerEnter(Collider other) {<br>
+                    &nbsp;&nbsp;<span style="color: #c586c0;">if</span> (other.CompareTag(<span style="color: #ce9178;">"Food"</span>) && !isCooking) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;currentFood = other.gameObject;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;isCooking = <span style="color: #569cd6;">true</span>;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;currentTimer = 0f;<br>
+                    &nbsp;&nbsp;}<br>
+                    }<br><br>
+                    <span style="color: #569cd6;">private void</span> Update() {<br>
+                    &nbsp;&nbsp;<span style="color: #c586c0;">if</span> (isCooking && currentFood != <span style="color: #569cd6;">null</span>) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;currentTimer += Time.deltaTime; <span style="color: #6a9955;">// Đếm ngược</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #c586c0;">if</span> (currentTimer >= requiredCookTime) CompleteCooking();<br>
+                    &nbsp;&nbsp;}<br>
                     }
                 </div>
 
                 <h2>> KEY_FEATURES</h2>
                 <ul style="list-style: inside square; color: #ccc; margin-left: 10px;">
-                    <li><strong>Recallable Weapon:</strong> Ném vũ khí đi găm vào tường/quái và gọi về bất cứ lúc nào.</li>
-                    <li><strong>Dynamic Camera:</strong> Camera lắc nhẹ (Screen Shake) khi rìu va chạm và Zoom khi thực hiện đòn kết liễu.</li>
-                    <li><strong>Boss Fight:</strong> Cơ chế phá hủy Core với thanh máu và các đợt quái bảo vệ.</li>
+                    <li><strong>Interaction:</strong> Sử dụng module Raycast của <em>XR Interaction Toolkit</em> để xử lý trỏ và cầm nắm vật lý.</li>
+                    <li><strong>Data Management:</strong> Dùng <em>ScriptableObjects</em> để lưu trữ dữ liệu món ăn và load động bằng <code>Resources.Load</code>.</li>
+                    <li><strong>Gameplay:</strong> Cơ chế nấu ăn thực tế (Lò vi sóng, Pha chế) và hệ thống Đơn hàng ngẫu nhiên.</li>
                 </ul>
             </div>
 
             <aside class="sidebar">
                 <div class="sidebar-item">
                     <label>ROLE:</label>
-                    Solo Developer (100%)
+                    Solo Developer (Code, Art, Design)
                 </div>
                 <div class="sidebar-item">
-                    <label>GENRE:</label>
-                    Action Runner / Hack & Slash
+                    <label>TEAM:</label>
+                    InfectedBreakers (Uni Project)
                 </div>
                 <div class="sidebar-item">
                     <label>TECH STACK:</label>
-                    Unity, Physics System, DOTween
-                </div>
-                <div class="sidebar-item">
-                    <label>BEHIND THE SCENES:</label>
-                    <a href="https://www.youtube.com/watch?v=bdqEVMYeQxY" target="_blank" style="color: var(--accent);">
-                        <i class="fab fa-youtube"></i> Watch Development Process
-                    </a>
+                    Unity 3D, XR Interaction Toolkit, ScriptableObject
                 </div>
                 <div style="margin-top: 30px;">
-                    <a href="#" class="btn" style="width: 100%; text-align: center;">PLAY BUILD (DEMO)</a>
+                    <a href="#" class="btn" style="width: 100%; text-align: center;">XEM GAMEPLAY</a>
                 </div>
             </aside>
         </div>

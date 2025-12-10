@@ -4,57 +4,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aki Game Dev | Game Dev Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    <title>Aki The Builder | Mission Archives</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;500;600;700&family=Fira+Code:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
         :root {
             --bg-color: #0d0e15;
             --card-bg: #161821;
-            --text-main: #a6accd;
+            --text-main: #c0c5e0;
             --accent: #ff0055;
-            /* Hồng Neon */
             --highlight: #00e5ff;
-            /* Xanh Cyan */
             --grid-color: rgba(0, 229, 255, 0.05);
+            --font-head: 'Chakra Petch', sans-serif;
+            --font-body: 'Chakra Petch', sans-serif;
+            --font-code: 'Fira Code', monospace;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            cursor: crosshair;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent) var(--bg-color);
         }
 
-        html {
-            scroll-behavior: smooth;
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-color);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--highlight);
         }
 
         body {
-            font-family: 'VT323', monospace;
+            font-family: var(--font-body);
             background-color: var(--bg-color);
             color: var(--text-main);
-            line-height: 1.4;
-            font-size: 1.3rem;
+            line-height: 1.6;
+            font-size: 1.1rem;
             overflow-x: hidden;
-            background-image:
-                linear-gradient(var(--grid-color) 1px, transparent 1px),
-                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-image: linear-gradient(var(--grid-color) 1px, transparent 1px), linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
             background-size: 40px 40px;
-            animation: gridMove 3s linear infinite;
+            animation: bgScroll 20s linear infinite;
         }
 
-        @keyframes gridMove {
+        @keyframes bgScroll {
             0% {
                 background-position: 0 0;
             }
 
             100% {
-                /* Di chuyển sang trái 40px (đúng bằng kích thước 1 ô vuông) */
-                /* Muốn chạy nhanh hơn thì giảm số giây ở body xuống (ví dụ 1s) */
-                /* Muốn chạy chậm thì tăng lên (ví dụ 5s, 10s) */
-                background-position: -40px 0;
+                background-position: -40px 40px;
             }
         }
 
@@ -70,43 +90,56 @@
             z-index: 999;
         }
 
+        /* Typography */
         h1,
         h2,
         h3,
         .logo,
         .btn,
-        .section-title {
-            font-family: 'Press Start 2P', cursive;
+        .sidebar-label {
+            font-family: var(--font-head);
             text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 1px;
         }
 
-        /* --- Animations Classes --- */
+        h1 {
+            color: #fff;
+            text-shadow: 0 0 10px var(--accent);
+        }
+
+        h2 {
+            color: var(--highlight);
+            margin-bottom: 1.5rem;
+            border-left: 5px solid var(--highlight);
+            padding-left: 15px;
+            display: inline-block;
+            line-height: 1.2;
+        }
+
         .hidden {
-            opacity: 0;
-            filter: blur(5px);
-            transform: translateY(50px);
-            /* Mặc định thụt xuống dưới */
-            transition: all 1s ease-out;
+            display: none !important;
         }
 
-        .show {
-            opacity: 1;
-            filter: blur(0);
-            transform: translateY(0);
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
         }
 
-        /* Riêng mấy cái thẻ bài thì cho bay trễ từng cái một (stagger) */
-        .project-card:nth-child(2) {
-            transition-delay: 200ms;
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .project-card:nth-child(3) {
-            transition-delay: 400ms;
-        }
-
-        /* --- Header --- */
+        /* Header & Nav */
         header {
-            padding: 1.5rem 5%;
+            padding: 1rem 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -115,48 +148,69 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(10px);
         }
 
         .logo {
             color: var(--highlight);
+            font-size: 1.2rem;
+            cursor: pointer;
+            font-weight: 800;
+        }
+
+        .nav-group {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-family: var(--font-code);
+            font-weight: 600;
+            transition: 0.3s;
+            margin-right: 5px;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+            text-shadow: 0 0 5px var(--accent);
+        }
+
+        /* LANGUAGE SWITCHER CSS */
+        .lang-switch {
+            display: flex;
+            gap: 5px;
+            border: 1px solid var(--highlight);
+            padding: 2px;
+            border-radius: 4px;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-main);
+            padding: 2px 8px;
+            font-family: var(--font-code);
+            cursor: pointer;
+            transition: 0.3s;
             font-size: 0.9rem;
-            text-shadow: 2px 2px 0px var(--accent);
         }
 
-        .logo:hover {
-            animation: glitch 0.5s infinite;
+        .lang-btn:hover {
+            color: #fff;
         }
 
-        @keyframes glitch {
-            0% {
-                transform: translate(0)
-            }
-
-            20% {
-                transform: translate(-2px, 2px)
-            }
-
-            40% {
-                transform: translate(-2px, -2px)
-            }
-
-            60% {
-                transform: translate(2px, 2px)
-            }
-
-            80% {
-                transform: translate(2px, -2px)
-            }
-
-            100% {
-                transform: translate(0)
-            }
+        .lang-btn.active {
+            background: var(--highlight);
+            color: #000;
+            font-weight: bold;
         }
 
-        /* --- Hero --- */
-        .hero {
-            min-height: 90vh;
+        /* Hero */
+        #hero {
+            min-height: 85vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -165,82 +219,106 @@
             padding: 0 20px;
         }
 
-        .hero h1 {
-            font-size: 2.2rem;
-            margin-bottom: 1.5rem;
-            color: #fff;
-            line-height: 1.6;
+        /* Updated Hero Styles */
+        .hero-title {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1.2;
+            margin-bottom: 1rem;
         }
 
-        .hero h1 span {
+        .hero-title .role-text {
+            color: #fff;
+            /* Màu trắng theo yêu cầu */
+            font-size: 1.5rem;
+            /* Chữ nhỏ hơn */
+            text-shadow: none;
+            /* Bỏ glow chói lóa */
+            font-weight: 600;
+            margin-bottom: 5px;
+            letter-spacing: 2px;
+        }
+
+        .hero-title .name-text {
             color: var(--accent);
+            /* Màu điểm nhấn */
+            font-size: 3.5rem;
+            /* Tên to đùng */
+            text-shadow: 0 0 15px var(--accent);
+            /* Glow mạnh cho tên */
+            font-weight: 800;
         }
 
-        .status-bar {
-            background: #000;
-            padding: 8px 15px;
-            border: 1px solid var(--highlight);
+        .status-badge {
+            background: rgba(0, 255, 0, 0.1);
+            border: 1px solid #0f0;
+            color: #0f0;
+            padding: 5px 15px;
+            font-family: var(--font-code);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
             display: inline-block;
-            margin-bottom: 2rem;
-            box-shadow: 0 0 10px var(--highlight);
-            font-size: 1rem;
+            animation: pulse 2s infinite;
         }
 
-        .btn {
-            display: inline-block;
-            padding: 15px 25px;
-            background: var(--accent);
-            color: #fff;
-            text-decoration: none;
-            font-size: 0.8rem;
-            border: none;
-            transition: 0.2s;
-            box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 0.5);
-            margin: 10px;
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(0, 255, 0, 0.4);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(0, 255, 0, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(0, 255, 0, 0);
+            }
         }
 
-        .btn:hover {
-            transform: translate(2px, 2px);
-            box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 0.5);
-            background: var(--highlight);
-            color: #000;
+        .hero-desc {
+            margin: 15px 0 30px;
+            max-width: 600px;
         }
 
-        .btn-outline {
-            background: transparent;
-            border: 2px solid var(--highlight);
-            color: var(--highlight);
-            box-shadow: none;
-        }
-
-        /* --- About Me Section (MỚI) --- */
+        /* About Section */
         .about-section {
             padding: 4rem 10%;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             gap: 4rem;
             flex-wrap: wrap;
+            background: rgba(22, 24, 33, 0.5);
+            border-top: 1px solid #333;
+            border-bottom: 1px solid #333;
         }
 
         .profile-frame {
-            width: 250px;
-            height: 250px;
-            border: 4px solid var(--highlight);
+            width: 200px;
+            height: 200px;
+            border: 2px solid var(--highlight);
             padding: 5px;
             position: relative;
             background: var(--card-bg);
+            transition: 0.3s;
+            flex-shrink: 0;
         }
 
-        /* Tạo mấy cái góc vuông trang trí cho avatar */
+        .profile-frame:hover {
+            box-shadow: 0 0 20px var(--highlight);
+            transform: scale(1.02);
+        }
+
         .profile-frame::before {
             content: "";
             position: absolute;
             top: -4px;
             left: -4px;
-            width: 20px;
-            height: 20px;
-            background: var(--accent);
+            width: 15px;
+            height: 15px;
+            border-top: 4px solid var(--accent);
+            border-left: 4px solid var(--accent);
         }
 
         .profile-frame::after {
@@ -248,164 +326,426 @@
             position: absolute;
             bottom: -4px;
             right: -4px;
-            width: 20px;
-            height: 20px;
-            background: var(--accent);
+            width: 15px;
+            height: 15px;
+            border-bottom: 4px solid var(--accent);
+            border-right: 4px solid var(--accent);
         }
 
         .profile-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: grayscale(100%) contrast(1.2);
-            /* Ảnh trắng đen cho ngầu */
+            filter: grayscale(100%);
             transition: 0.5s;
         }
 
         .profile-frame:hover .profile-img {
-            filter: grayscale(0%) contrast(1);
+            filter: grayscale(0%);
         }
 
         .about-text {
             max-width: 600px;
-        }
-
-        .about-text h2 {
-            font-size: 1.5rem;
-            color: var(--accent);
-            margin-bottom: 1.5rem;
+            width: 100%;
         }
 
         .data-row {
-            border-bottom: 1px dashed #333;
+            display: grid;
+            grid-template-columns: 140px 1fr;
+            gap: 10px;
             padding: 8px 0;
-            display: flex;
-            justify-content: space-between;
+            border-bottom: 1px dashed #444;
+            font-family: var(--font-code);
+            align-items: baseline;
         }
 
         .data-label {
             color: var(--highlight);
+            font-weight: bold;
+            text-align: left;
         }
 
-        /* --- Skills --- */
-        .section-title {
+        /* Projects Section */
+        #projects {
+            padding: 4rem 10%;
+        }
+
+        .section-header {
             text-align: center;
-            font-size: 1.5rem;
-            margin: 4rem 0 2rem;
-            color: #fff;
-            text-shadow: 3px 3px 0px var(--accent);
+            margin-bottom: 3rem;
         }
 
-        .skills-container {
+        .filter-bar {
             display: flex;
             justify-content: center;
             gap: 15px;
+            margin-bottom: 3rem;
             flex-wrap: wrap;
-            padding: 0 10%;
         }
 
-        .skill-box {
-            background: var(--card-bg);
+        .filter-btn {
+            background: transparent;
             border: 1px solid var(--text-main);
-            padding: 10px 20px;
-            min-width: 100px;
-            text-align: center;
+            color: var(--text-main);
+            padding: 8px 16px;
+            font-family: var(--font-code);
+            cursor: pointer;
             transition: 0.3s;
         }
 
-        .skill-box:hover {
+        .filter-btn:hover,
+        .filter-btn.active {
             border-color: var(--highlight);
-            color: var(--highlight);
-            transform: scale(1.1);
+            color: #000;
+            background: var(--highlight);
+            box-shadow: 0 0 15px var(--highlight);
         }
 
-        .skill-box strong {
-            display: block;
-            font-size: 1.2rem;
-        }
-
-        /* --- Projects --- */
-        .projects-grid {
+        .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 3rem;
-            padding: 0 10% 6rem;
+            gap: 2.5rem;
         }
 
         .project-card {
             background: var(--card-bg);
-            border: 2px solid #333;
+            border: 1px solid #333;
+            overflow: hidden;
+            transition: 0.4s;
             position: relative;
-            transition: transform 0.3s;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
         }
 
         .project-card:hover {
             transform: translateY(-10px);
-            border-color: var(--highlight);
-            box-shadow: 0 0 15px rgba(0, 229, 255, 0.3);
+            border-color: var(--accent);
+            box-shadow: 0 5px 20px rgba(255, 0, 85, 0.2);
         }
 
-        .project-img {
-            width: 100%;
+        .card-img-wrap {
             height: 200px;
-            background-color: #000;
+            overflow: hidden;
+            border-bottom: 1px solid #333;
+        }
+
+        .card-img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
-            border-bottom: 2px solid #333;
+            transition: 0.5s;
         }
 
-        .project-info {
+        .project-card:hover .card-img {
+            transform: scale(1.1);
+        }
+
+        .card-content {
             padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
         }
 
-        .project-info h3 {
+        .card-title {
+            font-size: 1.3rem;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        .tech-tags {
+            font-family: var(--font-code);
+            color: var(--highlight);
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px dashed #444;
+            padding-bottom: 0.5rem;
+        }
+
+        .card-desc {
             font-size: 1rem;
-            margin-bottom: 10px;
+            color: #ccc;
+            margin-bottom: 1.5rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background: var(--accent);
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.9rem;
+            border: none;
+            cursor: pointer;
+            transition: 0.2s;
+            text-align: center;
+            margin-top: auto;
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            background: var(--highlight);
+            color: #000;
+            box-shadow: 0 0 10px var(--highlight);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--highlight);
+            color: var(--highlight);
+            margin-left: 10px;
+        }
+
+        .btn-outline:hover {
+            background: var(--highlight);
+            color: #000;
+        }
+
+        /* Detail Overlay */
+        #project-detail-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(13, 14, 21, 0.98);
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 2rem 5%;
+        }
+
+        .detail-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .close-overlay {
+            position: fixed;
+            top: 20px;
+            right: 30px;
+            font-size: 3rem;
+            color: var(--highlight);
+            cursor: pointer;
+            z-index: 1001;
+            transition: 0.3s;
+        }
+
+        .close-overlay:hover {
+            transform: rotate(90deg);
             color: #fff;
         }
 
-        .tech-stack {
-            color: var(--accent);
-            font-size: 1rem;
-            margin-bottom: 10px;
-            padding-bottom: 5px;
-            border-bottom: 1px dashed #444;
+        .detail-hero {
+            height: 50vh;
+            border-bottom: 4px solid var(--accent);
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            padding: 2rem;
+            margin-bottom: 3rem;
         }
 
-        /* --- Footer --- */
-        footer {
-            background: #000;
+        .detail-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            filter: brightness(0.3);
+            z-index: -1;
+        }
+
+        .detail-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            border: 1px solid #444;
+            padding: 1.5rem;
+            border-radius: 4px;
+            font-family: var(--font-code);
+            color: #d4d4d4;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            position: relative;
+        }
+
+        .code-block::before {
+            content: "C# SNIPPET";
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: var(--highlight);
+            color: #000;
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            font-weight: bold;
+        }
+
+        .sidebar-info {
+            background: var(--card-bg);
             padding: 2rem;
-            text-align: center;
-            border-top: 4px solid var(--accent);
+            border: 1px solid var(--highlight);
+            height: fit-content;
+        }
+
+        .sidebar-row {
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar-label {
+            color: var(--accent);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
             margin-top: 2rem;
         }
 
+        .gallery-img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .gallery-img:hover {
+            border-color: var(--highlight);
+            transform: scale(1.05);
+        }
+
+        /* Lightbox */
+        #lightbox-modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 80vh;
+            border: 2px solid var(--highlight);
+            box-shadow: 0 0 30px var(--highlight);
+            animation: zoomIn 0.3s;
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        #lb-caption {
+            margin-top: 15px;
+            color: #fff;
+            font-family: var(--font-code);
+            font-size: 1.1rem;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 5px 15px;
+            border-radius: 4px;
+            text-align: center;
+            max-width: 80%;
+        }
+
+        .lb-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .lb-prev,
+        .lb-next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -50px;
+            color: var(--highlight);
+            font-weight: bold;
+            font-size: 30px;
+            transition: 0.3s;
+            user-select: none;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .lb-next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .lb-prev {
+            left: 0;
+            border-radius: 0 3px 3px 0;
+        }
+
+        .lb-prev:hover,
+        .lb-next:hover {
+            background-color: var(--highlight);
+            color: #000;
+        }
+
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 1.5rem;
+            .detail-content {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-title h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero-title .name-text {
+                font-size: 2.5rem;
             }
 
             .about-section {
                 gap: 2rem;
-                padding: 4rem 5%;
+                flex-direction: column;
+                text-align: center;
             }
 
-            .projects-grid {
-                padding: 0 5% 4rem;
-            }
-        }
-
-        @keyframes blink {
-            0% {
-                opacity: 1;
+            .data-row {
+                grid-template-columns: 1fr;
+                text-align: center;
             }
 
-            50% {
-                opacity: 0;
-            }
-
-            100% {
-                opacity: 1;
+            .data-label {
+                text-align: center;
             }
         }
     </style>
@@ -414,145 +754,560 @@
 <body>
 
     <header>
-        <div class="logo">akkii0609</div>
-        <div>
-            <a href="#" style="color:var(--highlight); margin-right:20px;"><i class="fab fa-github"></i></a>
-            <a href="#" style="color:var(--highlight);"><i class="fab fa-linkedin"></i></a>
+        <div class="logo" onclick="goHome()">🪓AKI_THE_BUILDER</div>
+        <div class="nav-group">
+            <div class="nav-links">
+                <!-- Đã gỡ bỏ data-lang-key để không bị dịch -->
+                <a href="#" onclick="goHome()">HOME</a>
+                <a href="#about">PROFILE</a>
+                <a href="./assets/Aki_CV.pdf" target="_blank" data-lang-key="btn_cv">CV</a>
+            </div>
+            <!-- Language Switcher -->
+            <div class="lang-switch">
+                <button class="lang-btn active" onclick="changeLanguage('vi')" id="btn-vi">VN</button>
+                <button class="lang-btn" onclick="changeLanguage('en')" id="btn-en">EN</button>
+            </div>
         </div>
     </header>
 
-    <section class="hero hidden">
-        <div class="status-bar">
-            STATUS: 
-            <span style="color:#0f0; animation: blink 1s infinite;">OPEN TO WORK</span>
-             <!-- <span style="color:rgb(255, 0, 0); animation: blink 1s infinite;">BUSY</span> -->
-        </div>
-        <h1>
-            UNITY GAME DEVELOPER<br>
-            <span>AKI NGUYỄN</span>
-        </h1>
-        <p style="max-width: 600px; margin-bottom: 30px; color: #ccc;">
-            > Inserting coins...<br>
-            > Press Start to continue...
-        </p>
-        <div>
-            <a href="#projects" class="btn">START!</a>
-            <a href="#about" class="btn btn-outline">ABOUT ME</a>
-        </div>
-    </section>
+    <main id="home-view">
+        <section id="hero">
+            <div class="status-badge" data-lang-key="status">STATUS: OPEN TO WORK</div>
 
-    <section id="about" class="about-section hidden">
-        <div class="profile-frame">
-            <img src="./assets/img/avatar.png"
-                alt="Profile" class="profile-img">
-        </div>
-        <div class="about-text">
-            <h2>> CHARACTER_DATA</h2>
-            <p style="margin-bottom: 20px;">
-                Xin chào! Mình là Nguyễn Hữu Tuấn Tú aka Aki.
+            <!-- Chỉnh lại cấu trúc Hero Title -->
+            <h1 class="hero-title">
+                <span class="role-text" data-lang-key="role">UNITY GAME DEVELOPER</span>
+                <span class="name-text">AKI THE BUILDER</span>
+            </h1>
 
+            <p class="hero-desc" data-lang-key="hero_desc">
+                > Loading Skills... [C#] [Unity XR] [Game Logic]<br>
+                > Chuyên trị các thể loại game từ chém giết (Hack n Slash) đến nấu ăn (Simulation).
             </p>
-            <div class="data-row">
-                <span class="data-label">LEVEL:</span> <span>Junior / Entry-Level Unity Developer</span>
+            <div>
+                <a href="#projects" class="btn" data-lang-key="btn_start">START GAME</a>
+                <a href="#about" class="btn btn-outline" data-lang-key="btn_info">INFO</a>
             </div>
-            <div class="data-row">
-                <span class="data-label">CORE SKILLS:</span> <span>C#, Unity XR/AR, State Machine, Data
-                    Structure,...</span>
-            </div>
-            <div class="data-row">
-                <span class="data-label">LOCATION:</span> <span>HCMC, Vietnam (GMT+7)</span>
-            </div>
-            <div class="data-row">
-                <span class="data-label">EMAIL:</span> <span>aki.finding@gmail.com</span>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- <h2 class="section-title hidden">SKILL TREE</h2>
-    <div class="skills-container hidden">
-        <div class="skill-box"><strong>90</strong> Unity</div>
-        <div class="skill-box"><strong>85</strong> C#</div>
-        <div class="skill-box"><strong>70</strong> Shader</div>
-        <div class="skill-box"><strong>80</strong> Git</div>
-        <div class="skill-box"><strong>60</strong> Blender</div>
-    </div> -->
-
-    <h2 class="section-title hidden" id="projects">PROJECTS </h2>
-
-    <div class="projects-grid">
-        <div class="project-card hidden">
-            <img src="./assets/img/project/001_khubepdieuky.png" alt="Game 1" class="project-img">
-            <div class="project-info">
-                <h3>Khu bếp diệu kỳ</h3>
-                <div class="tech-stack">[C#] [3D] [VR]</div>
-                <p>
-                    Đây là đồ án môn học tâm huyết mà <strong>mình</strong> đã thực hiện toàn bộ các khâu từ Lập trình, Thiết kế đồ họa (Art) đến Game Design. Trò chơi là một mô phỏng quản lý quầy bếp góc nhìn thứ nhất, nơi người chơi phải chạy đua với thời gian để phục vụ các món ăn theo yêu cầu. Dự án là minh chứng cho khả năng làm việc độc lập và tư duy sản phẩm trọn vẹn của mình.
+        <section id="about" class="about-section">
+            <div class="profile-frame">
+                <img src="./assets/img/avatar.png" alt="Profile" class="profile-img">
+            </div>
+            <div class="about-text">
+                <h2 data-lang-key="char_data">> CHARACTER_DATA</h2>
+                <p style="margin-bottom: 20px;" data-lang-key="intro">
+                    
                 </p>
-                <div style="margin-top: 15px;">
-                    <a href="khu-bep-dieu-ky.html" class="btn">XEM</a>
-                    <!-- <a href="#" class="btn" style="padding: 8px 15px;">PLAY DEMO</a> -->
+                <!-- <div class="data-row">
+                    <span class="data-label">LEVEL:</span> <span data-lang-key="level_val">Junior / Entry-Level Unity
+                        Developer</span>
+                </div>
+                <div class="data-row">
+                    <span class="data-label" data-lang-key="skills_label">CORE SKILLS:</span> <span>C#, Unity XR/AR,
+                        State Machine, Data Structure</span>
+                </div>
+                <div class="data-row">
+                    <span class="data-label">LOCATION:</span> <span data-lang-key="loc_val">HCMC, Vietnam (GMT+7)</span>
+                </div>
+                <div class="data-row">
+                    <span class="data-label">EMAIL:</span> <span>aki.finding@gmail.com</span> -->
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div class="project-card hidden">
-            <img src="https://via.placeholder.com/400x250/000/ff0055?text=GAME_02" alt="Game 2" class="project-img">
-            <div class="project-info">
-                <h3>FINISHER: LEVEL UP PHASE</h3>
-                <div class="tech-stack">[ANIMATION] [3D PLAFORMER] [RUN N GUN]</div>
-                <p>
-                    Đây là dự án Action Runner góc nhìn thứ 3 mà <strong>mình</strong> phát triển độc lập (Solo). Lấy cảm hứng từ cơ chế <em>Leviathan Axe</em> huyền thoại trong <em>God of War</em>, người chơi điều khiển nhân vật vừa di chuyển tốc độ cao, vừa ném rìu tiêu diệt quái vật cản đường và phá hủy "Lõi Năng Lượng" cuối màn chơi. Dự án tập trung nặng vào <strong>Toán học (Vector/Bézier Curves)</strong> để xử lý quỹ đạo vũ khí và cảm giác chiến đấu (Game Feel).
-                </p>
-                <div style="margin-top: 15px;">
-                    <a href="finisher.html" class="btn">XEM</a>
-                   
-                </div>
+        <section id="projects">
+            <div class="section-header">
+                <h2 data-lang-key="mission_archives">> MISSION ARCHIVES</h2>
+                <p style="font-family: var(--font-code); color: #888;" data-lang-key="mission_sub">// Chọn project để
+                    xem chi tiết</p>
             </div>
-        </div>
 
-        <div class="project-card hidden">
-            <img src="https://via.placeholder.com/400x250/000/ffff00?text=GAME_03" alt="Game 3" class="project-img">
-            <div class="project-info">
-                <h3>Aviation Assembly</h3>
-                <div class="tech-stack">[C#] [3D] [VR] [SIMULATION] [COURSEWORK]</div>
-                <p>Mô phỏng VR Kỹ thuật Chính xác cho sinh viên ngành Hàng không. Dự án đòi hỏi kỹ năng xử lý Sequential
-                    Assembly Logic (Logic lắp ráp theo từng bước), đảm bảo người dùng tuân thủ quy trình</p>
-                <div style="margin-top: 15px;">
-                    <a href="#" class="btn" style="padding: 8px 15px;">PLAY DEMO</a>
+            <div class="filter-bar">
+                <button class="filter-btn active" onclick="filterProjects('all')">ALL</button>
+                <button class="filter-btn" onclick="filterProjects('unity')">UNITY 3D</button>
+                <button class="filter-btn" onclick="filterProjects('vr')">VR/AR</button>
+                <button class="filter-btn" onclick="filterProjects('solo')">SOLO DEV</button>
+            </div>
+
+            <div class="grid-container" id="project-grid">
+                <!-- Projects injected by JS -->
+            </div>
+        </section>
+
+        <footer style="text-align: center; padding: 2rem; color: #555; border-top: 1px solid #222;">
+            <p>© 2025 Aki The Builder. Made with passion.</p>
+        </footer>
+    </main>
+
+    <!-- PROJECT DETAIL OVERLAY -->
+    <div id="project-detail-overlay" class="hidden">
+        <div class="close-overlay" onclick="closeProject()">&times;</div>
+
+        <div class="detail-container fade-in">
+            <header class="detail-hero" id="d-hero">
+                <div class="detail-bg" id="d-bg"></div>
+                <div>
+                    <div class="tech-tags" id="d-tags" style="color: #fff; border: none; font-size: 1rem;">TAGS</div>
+                    <h1 id="d-title" style="font-size: 2.5rem; text-shadow: 0 0 10px #000;">TITLE</h1>
+                    <!-- NÚT COPY LINK -->
+                    <button class="btn btn-outline" id="btn-copy-link" onclick="copyProjectLink()"
+                        style="font-size: 0.8rem; margin-top: 10px; padding: 5px 15px;">
+                        <i class="fas fa-link"></i> COPY LINK
+                    </button>
                 </div>
+            </header>
+
+            <div class="detail-content">
+                <div class="main-info">
+                    <h2 data-lang-key="mission_brief">> MISSION_BRIEF</h2>
+                    <p id="d-desc">Description...</p>
+
+                    <h2 data-lang-key="tech_log">> TECH_LOG</h2>
+                    <div id="d-tech-content"></div>
+
+                    <h2 data-lang-key="visual_evidence">> VISUAL_EVIDENCE</h2>
+                    <div class="gallery-grid" id="d-gallery"></div>
+                </div>
+
+                <aside class="sidebar-info">
+                    <div class="sidebar-row">
+                        <span class="sidebar-label">ROLE:</span>
+                        <span id="d-role">Solo Dev</span>
+                    </div>
+                    <div class="sidebar-row">
+                        <span class="sidebar-label">STACK:</span>
+                        <span id="d-stack">Unity, C#</span>
+                    </div>
+                    <div class="sidebar-row">
+                        <span class="sidebar-label">TIMELINE:</span>
+                        <span id="d-time">3 Months</span>
+                    </div>
+                    <!-- Nút này giờ sẽ được cập nhật dynamic -->
+                    <a href="#" class="btn" id="btn-play-demo" target="_blank" style="width: 100%;"
+                        data-lang-key="play_demo">PLAY DEMO</a>
+                </aside>
             </div>
         </div>
     </div>
 
-    <div style="text-align: center; margin-top: 2rem; margin-bottom: 4rem;">
-        <a href="all-projects.html" class="btn" style="font-size: 1.2rem; padding: 20px 40px;">
-            <i class="fas fa-database"></i> ACCESS FULL ARCHIVE
-        </a>
+    <!-- LIGHTBOX MODAL -->
+    <div id="lightbox-modal">
+        <span class="lb-close" onclick="closeLightbox()">&times;</span>
+        <span class="lb-prev" onclick="changeSlide(-1)">&#10094;</span>
+        <span class="lb-next" onclick="changeSlide(1)">&#10095;</span>
+        <img class="lightbox-content" id="lb-image" src="">
+        <p id="lb-caption"></p>
     </div>
-
-    <footer>
-        <p>> SYSTEM SHUTDOWN...</p>
-        <p>© 2025 Designed by aki GameDev.</p>
-    </footer>
 
     <script>
-        // Sử dụng Intersection Observer - Công nghệ soi camera của trình duyệt
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                // Nếu đối tượng xuất hiện trong màn hình
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('show'); // Thêm class 'show' để kích hoạt animation
+        const translations = {
+            vi: {
+                status: "TRẠNG THÁI: OPEN TO WORK",
+                role: "UNITY GAME DEVELOPER",
+                hero_desc: "> Press 'Start' to continue!",
+                btn_start: "START",
+                btn_info: "THÔNG TIN",
+                btn_cv: "RESUME/CV",
+                char_data: "> CHARACTER_DATA",
+                intro: "Xin chào, mình là Aki (AkiTheBuilder).  Mình là một lập trình viên game (Game Developer) đang sống tại Việt Nam. Đam mê của mình là biến những dòng code thành những thế giới sống động.  Mình tạo ra trang web này đơn giản là để chia sẻ những gì mình đã làm được. Tại đây, bạn có thể tìm thấy tất cả các dự án game của mình, xem cách mình xây dựng chúng và chơi thử nếu thích. Cảm ơn bạn đã ghé!",
+                level_val: "Junior / Mới vào nghề",
+                skills_label: "KỸ NĂNG CHÍNH:",
+                loc_val: "TP.HCM, Việt Nam (GMT+7)",
+                mission_archives: "> KHO DỰ ÁN",
+                mission_sub: "// Chọn project để xem chi tiết",
+                access_file: "XEM FILE >>",
+                mission_brief: "> TÓM TẮT NHIỆM VỤ",
+                tech_log: "> CÁC TÍNH NĂNG",
+                visual_evidence: "> HÌNH ẢNH",
+                play_demo: "LINK DEMO"
+            },
+            en: {
+                status: "STATUS: OPEN TO WORK",
+                role: "UNITY GAME DEVELOPER",
+                hero_desc: "> Press 'Start' to continue!",
+                btn_start: "START",
+                btn_info: "INFO",
+                btn_cv: "RESUME",
+                char_data: "> CHARACTER_DATA",
+                intro: "Hi there, I'm Aki (AkiTheBuilder).  I'm a Game Developer based in Vietnam. My passion is turning lines of code into living, breathing worlds. I built this website simply to share my work. Here, you can find all my game projects, see how I built them, and give them a try. Thanks for stopping by!",
+                level_val: "Junior / Entry-Level",
+                skills_label: "CORE SKILLS:",
+                loc_val: "HCMC, Vietnam (GMT+7)",
+                mission_archives: "> MISSION ARCHIVES",
+                mission_sub: "// Select a project to view details",
+                access_file: "ACCESS FILE >>",
+                mission_brief: "> MISSION_BRIEF",
+                tech_log: "> TECH_LOG",
+                visual_evidence: "> IMAGES",
+                play_demo: "DEMO LINK"
+            }
+        };
+
+        let currentLang = 'vi'; // Mặc định tiếng Việt cho thân thiện
+
+        // --- PROJECTS DATA (Bilingual) ---
+
+        const projectsData = [
+            {
+                "id": 1,
+                "slug": "khu-bep-dieu-ky",
+                "category": [
+                    "unity",
+                    "vr"
+                ],
+                "tags": "[UNITY 3D] [VR] [SIMULATION]",
+                "img": "./assets/img/project/001_khubepdieuky.png",
+                "title": {
+                    "vi": "KHU BẾP DIỆU KỲ",
+                    "en": "THE MAGICAL KITCHEN"
+                },
+                "desc": {
+                    "vi": "Đây là đồ án môn học tâm huyết mà mình đã thực hiện cùng team trong đó mình đảm nhận các khâu từ Game Design, Lập trình, Thiết kế đồ họa. Trò chơi là một mô phỏng quản lý quầy bếp góc nhìn thứ nhất, nơi người chơi phải chạy đua với thời gian để phục vụ các món ăn theo yêu cầu.",
+                    "en": "This is a project I poured my heart into working on with my team, where I handled everything from Game Design and Programming to Graphic Design. The game is a first-person kitchen management simulation where players race against time to serve dishes as requested."
+                },
+                "role": {
+                    "vi": "Designer, Dev",
+                    "en": "Designer, Dev"
+                },
+                "time": {
+                    "vi": "Thg 7 - Thg 9 2021",
+                    "en": "Jul 2021 - Sep 2021"
+                },
+                "stack": "Unity 3D, XR Interaction Toolkit, Blender, Photoshop",
+                "demoLink": "https://youtu.be/_vi-Wh3F7Ow",
+                "techContent": {
+                    "vi": "<h3 style=\"font-size: 1.2rem; color: #fff;\">1. Grabbing & Pivot Alignment</h3>\n                    <p>\n                        <strong>Vấn đề:</strong> Khi sử dụng Raycast để cầm nắm vật thể, object thường bị lệch hoặc xoay không đúng hướng mong muốn do sai Pivot, gây cảm giác khó chịu khi đặt bánh vào lò.<br>\n                        <strong>Giải pháp:</strong> Mình đã tinh chỉnh lại Pivot của toàn bộ model 3D và viết logic offset vị trí khi <code>OnGrab</code> để vật thể luôn nằm gọn trong tay người chơi một cách tự nhiên nhất.\n                    </p>\n\n\n<h3 style=\"font-size: 1.2rem; color: #fff;\">2. Cooking Logic (Update vs State Machine)</h3>\n                    <p>\n                        <strong>Vấn đề:</strong> Xử lý logic nướng bánh. Lúc đó do chưa áp dụng State Machine Pattern nên việc kiểm soát trạng thái (Sống -> Chín -> Cháy) khá phức tạp.<br>\n                        <strong>Giải pháp:</strong> Sử dụng <code>Collider Trigger</code> để phát hiện vật phẩm vào lò và xử lý bộ đếm thời gian (Timer) trực tiếp trong hàm <code>Update</code>. <em>(Bài học rút ra: Sau dự án này mình đã tìm hiểu và áp dụng State Machine cho các dự án sau để code sạch và dễ bảo trì hơn).</em>\n                    </p>",
+                    "en": "<h3 style=\"font-size: 1.2rem; color: #fff;\">1. Grabbing & Pivot Alignment</h3>\n<p>\n\n<strong>Problem:</strong> When using Raycast to grasp objects, the object is often misaligned or rotated incorrectly due to incorrect pivot, causing discomfort when placing the cake in the oven.<br>\n\n<strong>Solution:</strong> I have adjusted the pivot of the entire 3D model and written logic to offset the position when <code>OnGrab</code> so that the object always fits comfortably in the player's hand in the most natural way.\n\n</p>\n\n<h3 style=\"font-size: 1.2rem; color: #fff;\">2. Cooking Logic (Update vs State Machine)</h3>\n\n<p>\n\n<strong>Problem:</strong> Handling baking logic. At that time, because the State Machine Pattern hadn't been implemented yet, controlling the state (Live -> Cooked -> Burned) was quite complex.\n\nSolution: Use Collider Trigger to detect items entering the furnace and handle the timer directly in the Update function. (Lesson learned: After this project, I researched and applied State Machine to subsequent projects to create cleaner and more maintainable code.)"
+                },
+                "gallery": [
+                    {
+                        "src": "./assets/img/project/Screenshot_3.png",
+                        "cap": {
+                            "vi": "Bảng hướng dẫn",
+                            "en": "Guide Board"
+                        }
+                    },
+                    {
+                        "src": "./assets/img/project/Screenshot_4.png",
+                        "cap": {
+                            "vi": "Quầy bánh",
+                            "en": "Pastry Counter"
+                        }
+                    }
+                ]
+            },
+            {
+                "id": 2,
+                "slug": "finisher",
+                "category": [
+                    "unity",
+                    "solo",
+                    "action"
+                ],
+                "tags": "[SOLO] [ACTION] [PHYSICS]",
+                "img": "./assets/img/project/Screenshot_2.png",
+                "title": {
+                    "vi": "FINISHER",
+                    "en": "FINISHER"
+                },
+                "desc": {
+                    "vi": "Game chặt chém.",
+                    "en": "Hack n Slash game."
+                },
+                "role": {
+                    "vi": "Solo Dev",
+                    "en": "Solo Dev"
+                },
+                "time": {
+                    "vi": "Cá nhân",
+                    "en": "Personal"
+                },
+                "stack": "Unity, DOTween",
+                "demoLink": "",
+                "techContent": {
+                    "vi": "<p>Code logic...</p>",
+                    "en": "<p>Code logic...</p>"
+                },
+                "gallery": []
+            },
+            {
+                "id": 3,
+                "slug": "the-offer",
+                "category": [
+                    "unity",
+                    "solo"
+                ],
+                "tags": "[NEW]",
+                "img": "./assets/img/theOffer/the-offer.png",
+                "title": {
+                    "vi": "THE OFFER: Việc nhẹ lương cao",
+                    "en": "THE OFFER"
+                },
+                "desc": {
+                    "vi": "Một dự án cá nhân của mình đang thực hiện. \"The Offer\" là dự án game kinh dị sinh tồn góc nhìn thứ nhất (First-person Survival Horror) với phong cách đồ họa Retro PS1. Game lấy cảm hứng từ các vụ lừa đảo \"việc nhẹ lương cao\" xuyên biên giới, nơi người chơi phải đối mặt với áp lực tâm lý và tìm cách sinh tồn trong một tổ chức tội phạm công nghệ cao.\n\n",
+                    "en": "One of my personal projects I'm working on is \"The Offer,\" a first-person survival horror game with a retro PS1 graphic style. The game is inspired by cross-border \"easy job, high pay\" scams, where players face psychological pressure and must find a way to survive within a high-tech criminal organization."
+                },
+                "role": {
+                    "vi": "Dự án cá nhân",
+                    "en": "Personal project"
+                },
+                "time": {
+                    "vi": "Đang thực hiện",
+                    "en": "In progress"
+                },
+                "stack": "Unity3D",
+                "demoLink": "https://youtu.be/JN2nJsEm2_U",
+                "techContent": {
+                    "vi": "<h4>\n    Tính năng đã thực hiện:\n</h4>\n<ul>\n    <li data-list-item-id=\"e824c8a27e0466e8eb4c93be69b91c4ed\">\n        <strong>Hệ điều hành ảo (AkiOS):</strong> Trải nghiệm cảm giác bị giam lỏng trước màn hình máy tính với hệ thống app Zola, Telegrum, Facepunk mô phỏng chân thực. Dùng để tương tác mạng xã hội, nhắn tin với NPC, thực hiện lừa đảo qua tin nhắn và coding.\n    </li>\n    <li data-list-item-id=\"ec23db0bcdaa85fc212b7529b37c78abc\">\n        <strong>Gameplay \"Coding Test\":</strong> Minigame gõ code dồn dập kết hợp yếu tố nhịp điệu (Rhythm), tạo áp lực thời gian thực nghẹt thở.\n    </li>\n    <li data-list-item-id=\"ec3d520929c1061f083167b3b2148fe08\">\n        <strong>Cốt truyện tương tác:</strong> Hệ thống nhiệm vụ dẫn dắt người chơi qua các đoạn hội thoại, nhắn tin với NPC và manh mối ẩn giấu.\n    </li>\n    <li data-list-item-id=\"e484d5af33a8dff6988d747bf0c319edb\">\n        <strong>Đồ họa PS1</strong>: Phong cách Low-poly, Dithering và CRT Filter tạo không khí u ám, ngột ngạt đặc trưng của thập niên 90.\n    </li>\n</ul>",
+                    "en": "<h4>\n    Features implemented:\n</h4>\n<ul>\n    <li data-list-item-id=\"e67b7f6b1cd776e51c5e342fa34877083\">\n        <strong>Virtual operating system (AkiOS):</strong> Experience the feeling of being confined to a computer screen with realistic simulations of apps like Zola, Telegrum, and Facepunk. <span class=\"HwtZe jCAhz ChMk0b ryNqvb\" jsname=\"W297wb\" jsaction=\"click:PDNqTc,GFf3ac,qlVvte;contextmenu:Nqw7Te,QP7LD; mouseout:Nqw7Te; mouseover:PDNqTc,c2aHje\" jscontroller=\"BiTO4b\" lang=\"en\" dir=\"ltr\">Used for social networking, messaging with NPCs, scamming via text messages, and coding.</span>\n    </li>\n    <li data-list-item-id=\"ebd1ac977ca30ea62cc291ab6e1fc799b\">\n        <strong>\"Coding Test\" gameplay</strong>: A fast-paced coding minigame combined with rhythm elements, creating suffocating real-time pressure.\n    </li>\n    <li data-list-item-id=\"e5f2c758f1e9e7337597ae77a89e5a011\">\n        <strong>Interactive storyline:</strong> A quest system guides players through dialogues, messaging with NPCs, and hidden clues.\n    </li>\n    <li data-list-item-id=\"e60076d18ff5a73942b23037adaa729b4\">\n        <strong>PS1 graphics:</strong> Low-poly, dithering, and CRT filter styles create the gloomy, suffocating atmosphere characteristic of the 90s.\n    </li>\n</ul>"
+                },
+                "gallery": [
+                    {
+                        "src": "assets\\img\\theOffer\\akios_userface_phobo.png",
+                        "cap": {
+                            "vi": "Mạng xã hội để player đọc tin tức, nhận job,...",
+                            "en": "Social media allows players to read news, get jobs, etc."
+                        }
+                    },
+                    {
+                        "src": "assets\\img\\theOffer\\akios_userface_telegram.png",
+                        "cap": {
+                            "vi": "Giao diện chat với HR",
+                            "en": "Chat with HR"
+                        }
+                    },
+                    {
+                        "src": "assets\\img\\theOffer\\conversation_scriptableobject.png",
+                        "cap": {
+                            "vi": "Dữ liệu hội thoại hỗ trợ gửi hình ảnh và rẽ nhánh",
+                            "en": "Conversation data supports sending images and branching."
+                        }
+                    },
+                    {
+                        "src": "assets\\img\\theOffer\\telegrumcontroller.png",
+                        "cap": {
+                            "vi": "Component quản lý việc nhắn tin",
+                            "en": "The component manages messaging."
+                        }
+                    }
+                ]
+            }
+        ];
+
+        const grid = document.getElementById('project-grid');
+        const overlay = document.getElementById('project-detail-overlay');
+        let currentProjectSlug = ""; // Lưu slug hiện tại để dùng cho nút copy
+
+        // --- LANGUAGE LOGIC ---
+        function changeLanguage(lang) {
+            currentLang = lang;
+            document.getElementById('btn-vi').classList.toggle('active', lang === 'vi');
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+            document.querySelectorAll('[data-lang-key]').forEach(el => {
+                const key = el.getAttribute('data-lang-key');
+                if (translations[lang][key]) el.innerHTML = translations[lang][key];
+            });
+            renderProjects();
+
+            // Nếu đang mở overlay thì update lại nội dung trong đó luôn
+            if (!overlay.classList.contains('hidden')) {
+                // Tìm project hiện tại và reload data
+                const currentP = projectsData.find(p => p.slug === currentProjectSlug);
+                if (currentP) openProject(currentP.slug);
+            }
+        }
+
+        // --- RENDER GRID ---
+        function renderProjects(filter = 'all') {
+            const activeBtn = document.querySelector('.filter-btn.active');
+            const currentFilter = activeBtn ? activeBtn.getAttribute('onclick').match(/'([^']+)'/)[1] : 'all';
+
+            grid.innerHTML = '';
+            projectsData.forEach(p => {
+                if (filter === 'all' || p.category.includes(filter)) {
+                    if (currentFilter !== 'all' && !p.category.includes(currentFilter)) return;
+
+                    const card = document.createElement('div');
+                    card.className = 'project-card fade-in';
+                    // Sửa lại: Truyền slug vào hàm openProject
+                    card.onclick = () => openProject(p.slug);
+
+                    const pTitle = p.title[currentLang];
+                    const pDesc = p.desc[currentLang];
+                    const btnText = translations[currentLang].access_file;
+
+                    card.innerHTML = `
+                        <div class="card-img-wrap">
+                            <img src="${p.img}" class="card-img" alt="${pTitle}">
+                        </div>
+                        <div class="card-content">
+                            <div class="tech-tags">${p.tags}</div>
+                            <h3 class="card-title">${pTitle}</h3>
+                            <p class="card-desc">${pDesc}</p>
+                            <button class="btn">${btnText}</button>
+                        </div>
+                    `;
+                    grid.appendChild(card);
                 }
             });
+        }
+
+        function filterProjects(cat) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            renderProjects(cat);
+        }
+
+        // --- OPEN DETAIL (DEEP LINKING SUPPORTED) ---
+        let currentGallery = [];
+
+        function openProject(identifier) {
+            // Tìm theo slug trước, nếu không thấy thì tìm theo id (backward compatible)
+            const p = projectsData.find(item => item.slug === identifier || item.id == identifier);
+
+            if (!p) return;
+
+            currentProjectSlug = p.slug; // Lưu lại slug
+
+            // Cập nhật URL trên thanh địa chỉ mà không reload trang
+            const newUrl = window.location.pathname + '?id=' + p.slug;
+            window.history.pushState({ path: newUrl }, '', newUrl);
+
+            // Fill Data
+            document.getElementById('d-title').innerText = p.title[currentLang];
+            document.getElementById('d-tags').innerText = p.tags;
+            document.getElementById('d-bg').style.backgroundImage = `url('${p.img}')`;
+            document.getElementById('d-desc').innerText = p.desc[currentLang];
+
+            let techHTML = p.techContent[currentLang];
+            document.getElementById('d-tech-content').innerHTML = techHTML;
+
+            document.getElementById('d-role').innerText = p.role[currentLang] || p.role;
+            document.getElementById('d-stack').innerText = p.stack;
+            document.getElementById('d-time').innerText = p.time[currentLang];
+
+            const demoBtn = document.getElementById('btn-play-demo');
+            if (p.demoLink && p.demoLink.trim() !== "") {
+                demoBtn.style.display = "inline-block";
+                demoBtn.href = p.demoLink;
+                demoBtn.target = "_blank";
+                demoBtn.innerText = translations[currentLang].play_demo;
+            } else {
+                demoBtn.style.display = "none";
+            }
+
+            currentGallery = p.gallery;
+            const galDiv = document.getElementById('d-gallery');
+            galDiv.innerHTML = '';
+
+            p.gallery.forEach((item, index) => {
+                const img = document.createElement('img');
+                img.src = item.src;
+                img.className = 'gallery-img';
+                img.onclick = () => openLightbox(index);
+                galDiv.appendChild(img);
+            });
+
+            overlay.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeProject() {
+            overlay.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+            // Reset URL về sạch sẽ
+            window.history.pushState({ path: window.location.pathname }, '', window.location.pathname);
+        }
+
+        function copyProjectLink() {
+            if (!currentProjectSlug) return;
+            // Tạo link đầy đủ
+            const fullUrl = window.location.origin + window.location.pathname + '?id=' + currentProjectSlug;
+
+            navigator.clipboard.writeText(fullUrl).then(() => {
+                // Thay đổi text nút tạm thời để báo thành công
+                const btn = document.getElementById('btn-copy-link');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = "<i class='fas fa-check'></i> COPIED!";
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                }, 2000);
+            });
+        }
+
+        function goHome() {
+            closeProject();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // --- LIGHTBOX LOGIC ---
+        let currentImgIndex = 0;
+        const lightbox = document.getElementById('lightbox-modal');
+        const lbImg = document.getElementById('lb-image');
+        const lbCap = document.getElementById('lb-caption');
+
+        function openLightbox(index) {
+            currentImgIndex = index;
+            updateLightboxContent();
+            lightbox.style.display = 'flex';
+        }
+
+        function closeLightbox() {
+            lightbox.style.display = 'none';
+        }
+
+        function changeSlide(n) {
+            currentImgIndex += n;
+            if (currentImgIndex >= currentGallery.length) currentImgIndex = 0;
+            if (currentImgIndex < 0) currentImgIndex = currentGallery.length - 1;
+            updateLightboxContent();
+        }
+
+        function updateLightboxContent() {
+            lbImg.src = currentGallery[currentImgIndex].src;
+            const capData = currentGallery[currentImgIndex].cap;
+            lbCap.innerText = (typeof capData === 'object') ? capData[currentLang] : capData;
+        }
+
+        // Events
+        document.addEventListener('keydown', function (e) {
+            if (lightbox.style.display === 'flex') {
+                if (e.key === "Escape") closeLightbox();
+                if (e.key === "ArrowLeft") changeSlide(-1);
+                if (e.key === "ArrowRight") changeSlide(1);
+            } else {
+                if (e.key === "Escape") closeProject();
+            }
         });
 
-        // Tìm tất cả những thằng đang ẩn mình (class 'hidden')
-        const hiddenElements = document.querySelectorAll('.hidden');
+        lightbox.addEventListener('click', function (e) {
+            if (e.target === lightbox) closeLightbox();
+        });
 
-        // Bắt đầu theo dõi tụi nó
-        hiddenElements.forEach((el) => observer.observe(el));
+        // Xử lý nút Back của trình duyệt
+        window.onpopstate = function (event) {
+            if (overlay.classList.contains('hidden') === false) {
+                closeProject(); // Đóng overlay nếu đang mở
+            }
+        };
+
+        // --- INIT ---
+        changeLanguage('vi');
+
+        // Kiểm tra URL khi load trang để mở project (Deep Linking)
+        window.onload = function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const projectId = urlParams.get('id'); // Lấy tham số ?id=...
+            if (projectId) {
+                // Cuộn xuống phần projects một chút cho đẹp
+                document.getElementById('projects').scrollIntoView();
+                // Mở project tương ứng
+                openProject(projectId);
+            }
+        };
+
     </script>
-
 </body>
 
 </html>
